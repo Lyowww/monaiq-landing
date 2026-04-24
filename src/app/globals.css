@@ -2,20 +2,63 @@
 @tailwind components;
 @tailwind utilities;
 
+/**
+ * MonAIQ mobile design tokens (see AI-FIance-Helper/mobile/src/theme/tokens.ts)
+ * #F5F5F2 paper, #D4AF37 gold, #A8B6A0 sage, #0A0C0F ink, #1A1F2B navy
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --paper: #f5f5f2;
+  --paper-elevated: #fdfcf9;
+  --ink: #0a0c0f;
+  --ink-soft: #3d463f;
+  --gold: #d4af37;
+  --gold-bright: #c9a227;
+  --gold-glow: rgba(212, 175, 55, 0.22);
+  --sage: #a8b6a0;
+  --navy: #1a1f2b;
+  --card-well: #10141c;
+  --on-accent: #0a0c0f;
+  --border-sage: rgba(168, 182, 160, 0.45);
+  --shadow-soft: rgba(26, 31, 43, 0.12);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+  body {
+    @apply min-h-dvh text-ink;
+    -webkit-tap-highlight-color: rgba(212, 175, 55, 0.15);
+    background: var(--paper);
+  }
+  ::selection {
+    background: rgba(212, 175, 55, 0.28);
+    color: var(--ink);
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .bg-grid-sage {
+    background-image: linear-gradient(
+        to right,
+        rgba(168, 182, 160, 0.1) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, rgba(168, 182, 160, 0.1) 1px, transparent 1px);
+  }
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
 }
