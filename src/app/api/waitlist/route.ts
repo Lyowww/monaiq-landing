@@ -32,6 +32,29 @@ async function readWebhookJson(res: Response): Promise<unknown> {
   }
 }
 
+/**
+ * Full URL for POSTing waitlist signups. Set one of:
+ * - WAITLIST_WEBHOOK_URL — full URL (preferred)
+ * - BACKEND_URL / API_URL / NEXT_PUBLIC_BACKEND_URL — base URL + WAITLIST_BACKEND_PATH (default `/waitlist`)
+ */
+function resolveWaitlistWebhookUrl(): string | undefined {
+  const explicit = process.env.WAITLIST_WEBHOOK_URL?.trim();
+  if (explicit) return explicit.replace(/\/$/, "");
+
+  const base =
+    process.env.BACKEND_URL?.trim() ||
+    process.env.API_URL?.trim() ||
+    process.env.NEXT_PUBLIC_BACKEND_URL?.trim() ||
+    process.env.NEXT_PUBLIC_API_URL?.trim();
+  if (!base) return undefined;
+
+  const pathRaw =
+    process.env.WAITLIST_BACKEND_PATH?.trim() || "/waitlist";
+  const path = pathRaw.startsWith("/") ? pathRaw : `/${pathRaw}`;
+  const normalizedBase = base.replace(/\/$/, "");
+  return `${normalizedBase}${path}`;
+}
+
 export async function POST(request: Request) {
   let json: unknown;
   try {
@@ -52,7 +75,7 @@ export async function POST(request: Request) {
   }
 
   const { email } = parsed.data;
-  const webhook = process.env.WAITLIST_WEBHOOK_URL;
+  const webhook = resolveWaitlistWebhookUrl();
 
   if (webhook) {
     try {
@@ -92,7 +115,10 @@ export async function POST(request: Request) {
     }
   } else {
     if (process.env.NODE_ENV === "development") {
-      console.log("[waitlist] (no WAITLIST_WEBHOOK_URL):", email);
+      console.log(
+        "[waitlist] no backend URL (set WAITLIST_WEBHOOK_URL or BACKEND_URL):",
+        email
+      );
     }
   }
 
