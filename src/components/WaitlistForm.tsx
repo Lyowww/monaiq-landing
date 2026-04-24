@@ -22,6 +22,7 @@ export function WaitlistForm() {
       });
       const data = (await res.json().catch(() => ({}))) as {
         error?: string;
+        message?: string;
         ok?: boolean;
       };
       if (!res.ok) {
@@ -34,7 +35,10 @@ export function WaitlistForm() {
       }
       setStatus("success");
       setMessage(
-        "Շնորհակալություն։ Ձեզ կտեղեկացնենք, երբ անվճար փորձնական հասանելի լինի։"
+        (typeof data.message === "string" && data.message.trim()
+          ? data.message
+          : null) ??
+          "Շնորհակալություն։ Ձեզ կտեղեկացնենք, երբ անվճար փորձնական հասանելի լինի։"
       );
       setEmail("");
     } catch {
