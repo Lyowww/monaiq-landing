@@ -3,13 +3,48 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { useState, type FormEvent } from "react";
 import { formatHy, hy } from "@/messages/hy";
+import { waitlistEn } from "@/messages/waitlist-en";
 import { BrandLogo } from "./BrandLogo";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
 type Status = "idle" | "loading" | "success" | "error";
 
-export function WaitlistForm() {
+const siteName = hy.site.name;
+
+type WaitlistFormProps = { locale?: "hy" | "en" };
+
+export function WaitlistForm({ locale = "hy" }: WaitlistFormProps) {
+  const t =
+    locale === "en"
+      ? {
+          title: waitlistEn.title,
+          titleHighlight: waitlistEn.titleHighlight,
+          titleEnd: waitlistEn.titleEnd,
+          description: formatHy(waitlistEn.description, { siteName }),
+          labelEmail: waitlistEn.labelEmail,
+          placeholder: waitlistEn.placeholderEmail,
+          submit: waitlistEn.submit,
+          submitting: waitlistEn.submitting,
+          errorGeneric: waitlistEn.errorGeneric,
+          errorNetwork: waitlistEn.errorNetwork,
+          successDefault: waitlistEn.successDefault,
+          disclaimer: formatHy(waitlistEn.disclaimer, { siteName }),
+        }
+      : {
+          title: hy.waitlist.title,
+          titleHighlight: hy.waitlist.titleHighlight,
+          titleEnd: hy.waitlist.titleEnd,
+          description: formatHy(hy.waitlist.description, { siteName }),
+          labelEmail: hy.waitlist.labelEmail,
+          placeholder: hy.waitlist.placeholderEmail,
+          submit: hy.waitlist.submit,
+          submitting: hy.waitlist.submitting,
+          errorGeneric: hy.waitlist.errorGeneric,
+          errorNetwork: hy.waitlist.errorNetwork,
+          successDefault: hy.waitlist.successDefault,
+          disclaimer: formatHy(hy.waitlist.disclaimer, { siteName }),
+        };
   const reduce = useReducedMotion();
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<Status>("idle");
@@ -33,7 +68,7 @@ export function WaitlistForm() {
       if (!res.ok) {
         setStatus("error");
         setMessage(
-          data.error || hy.waitlist.errorGeneric
+          data.error || t.errorGeneric
         );
         return;
       }
@@ -41,12 +76,12 @@ export function WaitlistForm() {
       setMessage(
         (typeof data.message === "string" && data.message.trim()
           ? data.message
-          : null) ?? hy.waitlist.successDefault
+          : null) ?? t.successDefault
       );
       setEmail("");
     } catch {
       setStatus("error");
-      setMessage(hy.waitlist.errorNetwork);
+      setMessage(t.errorNetwork);
     }
   }
 
@@ -85,19 +120,19 @@ export function WaitlistForm() {
             className="font-display w-full min-w-0 text-center text-[clamp(1.25rem,4.2vw,1.9rem)] font-extrabold leading-tight tracking-display-tight text-ink/95 sm:max-w-none sm:text-left sm:text-2xl md:text-3xl"
             id="waitlist-title"
           >
-            {hy.waitlist.title}
+            {t.title}
             <span className="text-gold-bright/95">
-              {hy.waitlist.titleHighlight}
+              {t.titleHighlight}
             </span>
-            {hy.waitlist.titleEnd}
+            {t.titleEnd}
           </h2>
         </div>
         <p className="mt-3 max-w-2xl text-left text-sm leading-relaxed text-ink-soft/90 min-[400px]:mt-4 sm:text-base">
-          {formatHy(hy.waitlist.description, { siteName: hy.site.name })}
+          {t.description}
         </p>
         <div className="mt-5 flex w-full min-w-0 flex-col gap-2.5 sm:mt-6 sm:flex-row sm:items-stretch sm:gap-3">
           <label className="sr-only" htmlFor="waitlist-email">
-            {hy.waitlist.labelEmail}
+            {t.labelEmail}
           </label>
           <input
             id="waitlist-email"
@@ -116,7 +151,7 @@ export function WaitlistForm() {
               }
             }}
             className="min-h-[50px] w-full min-w-0 flex-1 rounded-2xl border border-ink/10 bg-paper-elevated/95 px-3.5 text-base text-ink/95 shadow-[inset_0_1px_0_rgba(0,0,0,0.04)] outline-none ring-2 ring-transparent transition placeholder:text-ink-soft/45 focus:border-gold/45 focus:ring-amber-200/50 min-[400px]:px-4"
-            placeholder={hy.waitlist.placeholderEmail}
+            placeholder={t.placeholder}
             disabled={status === "loading"}
           />
           <button
@@ -126,7 +161,7 @@ export function WaitlistForm() {
           >
             <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/55 to-transparent transition duration-500 group-hover:translate-x-full motion-reduce:transition-none" />
             <span className="relative">
-              {status === "loading" ? hy.waitlist.submitting : hy.waitlist.submit}
+              {status === "loading" ? t.submitting : t.submit}
             </span>
           </button>
         </div>
@@ -144,7 +179,7 @@ export function WaitlistForm() {
           </motion.p>
         ) : null}
         <p className="mt-3 text-xs leading-relaxed text-ink-soft/70">
-          {formatHy(hy.waitlist.disclaimer, { siteName: hy.site.name })}
+          {t.disclaimer}
         </p>
       </div>
     </form>

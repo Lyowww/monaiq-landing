@@ -12,6 +12,8 @@ import { formatHy, hy } from "@/messages/hy";
 import { BrandLogo } from "./BrandLogo";
 import { WaitlistForm } from "./WaitlistForm";
 
+const MotionLink = motion(Link);
+
 const nav = hy.nav;
 const featureCards = hy.features.items;
 const faqItems = hy.faq.items;
@@ -231,18 +233,31 @@ export function MonaiqLanding() {
             className="hidden items-center gap-1 lg:flex xl:gap-2"
             aria-label={hy.a11y.navMain}
           >
-            {nav.map((item, i) => (
-              <motion.a
-                key={item.href}
-                href={item.href}
-                className="link-nav rounded-full px-2.5 py-1.5"
-                initial={reduce ? false : { opacity: 0, y: -8 }}
-                animate={reduce ? undefined : { opacity: 1, y: 0 }}
-                transition={{ delay: 0.12 + i * 0.05, ease: easeOut, duration: 0.45 }}
-              >
-                {item.label}
-              </motion.a>
-            ))}
+            {nav.map((item, i) =>
+              item.href.startsWith("/") ? (
+                <MotionLink
+                  key={item.href}
+                  href={item.href}
+                  className="link-nav rounded-full px-2.5 py-1.5"
+                  initial={reduce ? false : { opacity: 0, y: -8 }}
+                  animate={reduce ? undefined : { opacity: 1, y: 0 }}
+                  transition={{ delay: 0.12 + i * 0.05, ease: easeOut, duration: 0.45 }}
+                >
+                  {item.label}
+                </MotionLink>
+              ) : (
+                <motion.a
+                  key={item.href}
+                  href={item.href}
+                  className="link-nav rounded-full px-2.5 py-1.5"
+                  initial={reduce ? false : { opacity: 0, y: -8 }}
+                  animate={reduce ? undefined : { opacity: 1, y: 0 }}
+                  transition={{ delay: 0.12 + i * 0.05, ease: easeOut, duration: 0.45 }}
+                >
+                  {item.label}
+                </motion.a>
+              )
+            )}
           </nav>
           <motion.a
             href="#waitlist"
@@ -264,15 +279,25 @@ export function MonaiqLanding() {
             className="scrollbar-none -mx-0 flex snap-x snap-mandatory gap-1 overflow-x-auto overflow-y-hidden py-2.5 sm:justify-center sm:gap-0 sm:overflow-visible"
             aria-label={hy.a11y.navPageSections}
           >
-            {nav.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="snap-center shrink-0 rounded-full border border-transparent px-3 py-2 text-center text-xs font-medium leading-tight text-ink-soft/95 transition first:pl-0 last:pr-0 hover:border-gold/20 hover:text-ink active:border-gold/30 sm:shrink sm:px-2 sm:py-1.5"
-              >
-                {item.label}
-              </a>
-            ))}
+            {nav.map((item) =>
+              item.href.startsWith("/") ? (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="snap-center shrink-0 rounded-full border border-transparent px-3 py-2 text-center text-xs font-medium leading-tight text-ink-soft/95 transition first:pl-0 last:pr-0 hover:border-gold/20 hover:text-ink active:border-gold/30 sm:shrink sm:px-2 sm:py-1.5"
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="snap-center shrink-0 rounded-full border border-transparent px-3 py-2 text-center text-xs font-medium leading-tight text-ink-soft/95 transition first:pl-0 last:pr-0 hover:border-gold/20 hover:text-ink active:border-gold/30 sm:shrink sm:px-2 sm:py-1.5"
+                >
+                  {item.label}
+                </a>
+              )
+            )}
           </nav>
         </div>
       </motion.header>

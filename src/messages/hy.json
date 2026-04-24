@@ -30,6 +30,7 @@
   },
   "nav": [
     { "href": "#hero", "label": "Սկիզբ" },
+    { "href": "/hy/ai-finance-app", "label": "ՀՀ · «AI» ֆինանս" },
     { "href": "#features", "label": "Ինչու՞ MonAIQ" },
     { "href": "#ai", "label": "AI" },
     { "href": "#faq", "label": "Հաճախ տրվող հարցեր" },
@@ -221,6 +222,6 @@
   },
   "opengraph": {
     "subtitle": "Շուտով App Store-ում եւ Google Play-ում. Դրամով. Ձեր ֆինանսների AI ընկեր:",
-    "footer": "monaiq.app · AMD · iOS եւ Android"
+    "footer": "monaiq.info · AMD · iOS եւ Android"
   }
 }

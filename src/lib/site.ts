@@ -1,7 +1,7 @@
 import { hy } from "@/messages/hy";
 
 /**
- * Set NEXT_PUBLIC_SITE_URL in production (e.g. https://monaiq.app).
+ * Set NEXT_PUBLIC_SITE_URL in production (e.g. https://monaiq.info).
  */
 export const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
