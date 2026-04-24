@@ -1,30 +1,27 @@
 import type { Metadata, Viewport } from "next";
 import { Noto_Sans_Armenian, Noto_Serif_Armenian } from "next/font/google";
 import { JsonLd } from "@/components/JsonLd";
-import {
-  defaultDescription,
-  siteName,
-  siteUrl,
-} from "@/lib/site";
+import { defaultDescription, siteName, siteUrl } from "@/lib/site";
+import { hy } from "@/messages/hy";
 import "./globals.css";
 
 const fontSans = Noto_Sans_Armenian({
   variable: "--font-sans",
   subsets: ["armenian", "latin", "latin-ext"],
   display: "swap",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 const fontDisplay = Noto_Serif_Armenian({
   variable: "--font-display",
   subsets: ["armenian", "latin", "latin-ext"],
   display: "swap",
-  weight: ["600", "700"],
+  weight: ["600", "700", "800", "900"],
 });
 
 const title = {
-  default: `${siteName} | Ձեր ֆինանսական ընկերը · անձնական ֆինանսներ`,
-  template: `%s | ${siteName}`,
+  default: hy.meta.defaultTitle,
+  template: hy.meta.titleTemplate,
 };
 
 export const metadata: Metadata = {
@@ -34,17 +31,7 @@ export const metadata: Metadata = {
   applicationName: siteName,
   authors: [{ name: siteName, url: siteUrl }],
   creator: siteName,
-  keywords: [
-    "MonAIQ",
-    "անձնական ֆինանսներ",
-    "Հայաստան",
-    "դրամ",
-    "AMD",
-    "ֆինտեխ",
-    "AI",
-    "բյուջե",
-    "ծախսեր",
-  ],
+  keywords: hy.meta.keywords,
   category: "finance",
   alternates: {
     canonical: "/",
@@ -80,7 +67,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#F5F5F2",
+  themeColor: "#F5F1EA",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
@@ -95,7 +82,7 @@ export default function RootLayout({
   return (
     <html lang="hy" className="overflow-x-clip">
       <body
-        className={`${fontSans.variable} ${fontDisplay.variable} min-w-0 touch-manipulation overflow-x-clip pb-[env(safe-area-inset-bottom)] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)] font-sans antialiased`}
+        className={`${fontSans.variable} ${fontDisplay.variable} min-w-0 touch-manipulation overflow-x-clip pb-[env(safe-area-inset-bottom)] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)] font-sans text-ink antialiased [font-feature-settings:'kern'_1,'liga'_1]`}
       >
         <JsonLd />
         {children}

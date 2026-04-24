@@ -25,7 +25,7 @@ export function BrandLogo({
 
   return (
     <div
-      className={`relative shrink-0 overflow-hidden border border-sage/50 bg-paper-elevated shadow-lift ${className}`}
+      className={`relative shrink-0 overflow-hidden border border-ink/10 glass-panel bg-paper-elevated/95 shadow-lift ${className}`}
       style={{
         width: size,
         height: size,

@@ -1,86 +1,14 @@
 import Link from "next/link";
 import { siteName, siteTagline } from "@/lib/site";
+import { formatHy, hy } from "@/messages/hy";
 import { BrandLogo } from "./BrandLogo";
 import { WaitlistForm } from "./WaitlistForm";
 
-const nav = [
-  { href: "#features", label: "Հնարքներ" },
-  { href: "#ai", label: "AI-օգնական" },
-  { href: "#waitlist", label: "Գրանցում" },
-  { href: "#pillars", label: "Ինչու MonAIQ" },
-  { href: "#faq", label: "ՀՏՀ" },
-];
-
-const featureCards = [
-  {
-    title: "Գլխավոր էկրան",
-    desc: "Ընդհանուր մնացորդ, ամսվա մուտքեր ու ելքեր, «օրվա այրման» համարը, կարճ ամփոփում ձեր գործունեությունից.",
-    tag: "Գլխավոր",
-  },
-  {
-    title: "Արագ մուտքագրում",
-    desc: "Կատեգորիաներ, քարտ կամ կանխիկ, կարճ տեքստային հրամաններ, ցանկության դեպքում ձայնային ուղի.",
-    tag: "Արագ",
-  },
-  {
-    title: "Վիճակագրություն",
-    desc: "Ծախսի հոսք, 7/30/90 օր, մուտքի ու ելքի համեմատություն, ձեր նախշերին արձագանքող խորհուրդներ.",
-    tag: "Պարզություն",
-  },
-  {
-    title: "Դրամապանակ",
-    desc: "Պարտքեր, հաշիվներ, կանխատեսելի վճարներ, արտարժույթների նկատմամբ դրամային հղումներ.",
-    tag: "Վճարներ",
-  },
-  {
-    title: "Ֆինանսական պլաններ",
-    desc: "Ամսական շեմեր, կատեգորիայի սահմաններ, խնայողության նպատակներ, որոնք AI-ն հաշվի է առնում պատասխաններում.",
-    tag: "Պլան",
-  },
-  {
-    title: "Երկու լեզու",
-    desc: "Հայերեն և անգլերեն մեկ հավելվածում՝ հարմար հայաստանյան առօրյա ծախսին.",
-    tag: "Լոկալ",
-  },
-];
-
-const pillars = [
-  {
-    title: "Հայաստան և դրամ նախ",
-    body: "Դրամը հիմնական արժույթն է, մյուս արժույթներն էլ՝ դրամային համարժեքով.",
-  },
-  {
-    title: "Ձեր տվյալները, ձեր խորհրդատուն",
-    body: "Պատասխանները հիմնվում են այն ամենի վրա, ինչ ինքն եք գրանցել, ոչ թե համացանցի ընդհանուր խորհուրդների վրա.",
-  },
-  {
-    title: "Տեսեք գանձի շարժը",
-    body: "Մուտք, ելք, այրման արագություն, առաջիկա վճարումներ՝ մեկ տեսքում.",
-  },
-  {
-    title: "Ոչ բանկ, ոչ ներդնումային խորհուրդ",
-    body: "Ոչ ավանդ, ոչ վարկային որոշում. Ընդհանուր ներդրումային «տաք թեմաներ» այստեղ չեն.",
-  },
-];
-
-const faqItems = [
-  {
-    q: "MonAIQ-ը բանկ է՞",
-    a: "Ոչ. Դա անձնական ֆինանսների գործիք է՝ ձեր գանձը հաշվարկելու և հասկանալու համար, ոչ թե բանկային ապրանք.",
-  },
-  {
-    q: "Ինչո՞վ է օգնում AI-ն",
-    a: "Բյուջե, վճարունակություն, նախորդ ծախսեր, ինչն է ավելի շուտ վճարել — այս շրջանակում, ոչ թե ընդհանուր ներդրումային խորհուրդներ.",
-  },
-  {
-    q: "Ո՞ր արժույթն է հիմնական",
-    a: "Դրամը (AMD). Այլ արժույթներով գումարներ կարելի է մուտքագրել՝ դրամային ցուցադրական համարժեքով.",
-  },
-  {
-    q: "Ի՞նչ է MonAIQ Plus-ը",
-    a: "Վճարովի մակարդակ՝ ավելի խորը վիճակագրություն, ավելի շատ AI հնարավորություն և այլ գործառույթներ (փորձեք հավելվածում՝ ձեր շուկայի համար).",
-  },
-];
+const nav = hy.nav;
+const featureCards = hy.features.items;
+const pillars = hy.pillars.items;
+const faqItems = hy.faq.items;
+const pillarsTitle = formatHy(hy.pillars.title, { siteName: hy.site.name });
 
 function AppleIcon(props: { className?: string }) {
   return (
@@ -104,94 +32,172 @@ function GooglePlayIcon(props: { className?: string }) {
   );
 }
 
-function SparkIcon({ className = "" }: { className?: string }) {
+function InstagramIcon(props: { className?: string }) {
   return (
-    <span
-      className={`inline-block size-2.5 shrink-0 rounded-full bg-gold shadow-[0_0_8px_rgba(212,175,55,0.6)] ${className}`}
-      aria-hidden
-    />
+    <svg
+      fill="currentColor"
+      width="200px"
+      height="200px"
+      viewBox="0 0 32 32"
+      id="Camada_1"
+      version="1.1"
+      xmlSpace="preserve"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+    >
+      <g>
+        <path d="M22.3,8.4c-0.8,0-1.4,0.6-1.4,1.4c0,0.8,0.6,1.4,1.4,1.4c0.8,0,1.4-0.6,1.4-1.4C23.7,9,23.1,8.4,22.3,8.4z" />
+
+        <path d="M16,10.2c-3.3,0-5.9,2.7-5.9,5.9s2.7,5.9,5.9,5.9s5.9-2.7,5.9-5.9S19.3,10.2,16,10.2z M16,19.9c-2.1,0-3.8-1.7-3.8-3.8   c0-2.1,1.7-3.8,3.8-3.8c2.1,0,3.8,1.7,3.8,3.8C19.8,18.2,18.1,19.9,16,19.9z" />
+
+        <path d="M20.8,4h-9.5C7.2,4,4,7.2,4,11.2v9.5c0,4,3.2,7.2,7.2,7.2h9.5c4,0,7.2-3.2,7.2-7.2v-9.5C28,7.2,24.8,4,20.8,4z M25.7,20.8   c0,2.7-2.2,5-5,5h-9.5c-2.7,0-5-2.2-5-5v-9.5c0-2.7,2.2-5,5-5h9.5c2.7,0,5,2.2,5,5V20.8z" />
+      </g>
+    </svg>
+  );
+}
+
+function MailIcon(props: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={props.className} aria-hidden>
+      <path
+        fill="currentColor"
+        d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5L4 8V6l8 5 8-5v2z"
+      />
+    </svg>
+  );
+}
+
+function PhoneIcon(props: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={props.className} aria-hidden>
+      <path
+        fill="currentColor"
+        d="M6.62 10.79a15.15 15.15 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"
+      />
+    </svg>
   );
 }
 
 function ComingSoonStores() {
   return (
-    <div className="flex w-full max-w-md flex-col gap-2.5 min-[400px]:flex-row min-[400px]:items-stretch min-[400px]:gap-3 sm:max-w-none sm:flex-row">
+    <div className="grid w-full max-w-md grid-cols-1 gap-3 min-[420px]:grid-cols-2 min-[420px]:max-w-none sm:max-w-2xl">
       <div
-        className="inline-flex h-12 min-h-[48px] w-full min-w-0 cursor-not-allowed items-center justify-center gap-2 rounded-2xl border border-sage/50 bg-paper-elevated/80 px-4 py-0 text-sm font-semibold text-muted opacity-75 shadow-lift min-[400px]:flex-1 sm:h-auto sm:px-6 sm:py-3.5"
+        className="glass-card group flex min-h-[52px] cursor-not-allowed flex-col items-center justify-center gap-1 rounded-2xl px-4 py-3 text-center text-ink-soft transition duration-300 motion-safe:hover:shadow-lift sm:min-h-[56px] sm:flex-row sm:gap-2 sm:py-3.5"
         role="img"
-        aria-label="App Store, շուտով"
+        aria-label={hy.a11y.storeIos}
       >
-        <AppleIcon className="size-5 shrink-0 text-ink" />
-        <span className="min-w-0 break-words text-center sm:whitespace-nowrap">
-          App Store
-        </span>
-        <span className="shrink-0 rounded-full border border-sage/60 bg-sage/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-ink-soft">
-          Շուտով
-        </span>
+        <AppleIcon className="size-5 shrink-0 text-gold-bright" />
+        <div className="min-w-0 text-center sm:text-left">
+          <p className="text-xs font-extrabold text-ink sm:text-sm">
+            {hy.stores.iosTitle}
+          </p>
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-gold-dim/90">
+            {hy.stores.soon}
+          </p>
+        </div>
       </div>
       <div
-        className="inline-flex h-12 min-h-[48px] w-full min-w-0 cursor-not-allowed items-center justify-center gap-2 rounded-2xl border border-sage/50 bg-paper-elevated/80 px-4 py-0 text-sm font-semibold text-muted opacity-75 shadow-lift min-[400px]:flex-1 sm:h-auto sm:px-6 sm:py-3.5"
+        className="glass-card group flex min-h-[52px] cursor-not-allowed flex-col items-center justify-center gap-1 rounded-2xl px-4 py-3 text-center text-ink-soft transition duration-300 motion-safe:hover:shadow-lift sm:min-h-[56px] sm:flex-row sm:gap-2 sm:py-3.5"
         role="img"
-        aria-label="Google Play, շուտով"
+        aria-label={hy.a11y.storeAndroid}
       >
-        <GooglePlayIcon className="size-5 shrink-0 text-ink" />
-        <span className="min-w-0 break-words text-center sm:whitespace-nowrap">
-          Google Play
-        </span>
-        <span className="shrink-0 rounded-full border border-sage/60 bg-sage/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-ink-soft">
-          Շուտով
-        </span>
+        <GooglePlayIcon className="size-5 shrink-0 text-gold-bright" />
+        <div className="min-w-0 text-center sm:text-left">
+          <p className="text-xs font-extrabold text-ink sm:text-sm">
+            {hy.stores.androidTitle}
+          </p>
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-gold-dim/90">
+            {hy.stores.soon}
+          </p>
+        </div>
       </div>
     </div>
   );
 }
 
-const pageGutter =
-  "px-3 min-[400px]:px-4 sm:px-6";
+const pageGutter = "px-4 min-[400px]:px-5 sm:px-6 md:px-8";
+
+function AuroraOrbs() {
+  return (
+    <>
+      <div
+        className="pointer-events-none absolute -left-1/4 top-0 h-[min(60vh,32rem)] w-[min(100vw,48rem)] rounded-full bg-glow-blob opacity-80 blur-[100px] motion-safe:animate-float-slow motion-reduce:animate-none"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute -right-1/3 bottom-0 h-[min(50vh,28rem)] w-[min(90vw,40rem)] rounded-full bg-glow-blob motion-safe:opacity-50 motion-reduce:opacity-30 blur-[90px] motion-safe:animate-float-wide motion-reduce:animate-none"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(150, 185, 210, 0.22) 0%, transparent 68%)",
+        }}
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute left-1/2 top-1/3 h-64 w-64 -translate-x-1/2 rounded-full motion-safe:animate-pulse-ring motion-reduce:opacity-40"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(120, 170, 140, 0.18) 0%, transparent 70%)",
+        }}
+        aria-hidden
+      />
+    </>
+  );
+}
 
 export function MonaiqLanding() {
   return (
-    <div className="relative min-w-0">
+    <div className="relative min-w-0 overflow-x-clip text-ink">
       <div
-        className="pointer-events-none fixed inset-0 -z-10 bg-hero bg-grid-sage opacity-90 [background-size:32px_32px] sm:[background-size:48px_48px]"
+        className="pointer-events-none fixed inset-0 -z-20 bg-mesh-aurora"
         aria-hidden
       />
+      <div
+        className="pointer-events-none fixed inset-0 -z-10 bg-grid-fine opacity-[0.28] motion-safe:animate-grid-drift motion-reduce:opacity-20 motion-reduce:animate-none"
+        aria-hidden
+      />
+      <AuroraOrbs />
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-[max(1rem,env(safe-area-inset-left))] focus:top-[max(0.5rem,env(safe-area-inset-top))] focus:z-[100] focus:rounded-xl focus:border focus:border-sage/60 focus:bg-paper focus:px-4 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-ink focus:shadow-lift"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-[max(1rem,env(safe-area-inset-left))] focus:top-[max(0.5rem,env(safe-area-inset-top))] focus:z-[100] focus:rounded-2xl focus:border focus:border-gold/40 focus:bg-paper-elevated focus:px-4 focus:py-2.5 focus:text-sm focus:font-semibold focus:shadow-gold"
       >
-        Անցնել հիմնական բովանդակության
+        {hy.a11y.skipToContent}
       </a>
-      <header className="sticky top-0 z-50 border-b border-sage/30 bg-paper/90 pt-[max(0.25rem,env(safe-area-inset-top))] backdrop-blur-xl">
+
+      <header
+        className="sticky top-0 z-50 border-b border-ink/6 glass-panel motion-safe:transition-shadow motion-reduce:transition-none supports-[backdrop-filter]:bg-paper-elevated/80"
+        style={{ paddingTop: "max(0.5rem, env(safe-area-inset-top))" }}
+      >
         <div
-          className={`mx-auto flex min-h-[52px] max-w-6xl items-center justify-between gap-2 sm:min-h-0 sm:gap-3 ${pageGutter} py-2.5 sm:py-3`}
+          className={`mx-auto flex min-h-14 max-w-6xl items-center justify-between gap-2 sm:min-h-16 sm:gap-4 ${pageGutter} py-2`}
         >
           <Link
             href="/"
-            className="group flex min-w-0 max-w-[65%] items-center gap-2 sm:max-w-none sm:gap-2.5"
-            aria-label={`${siteName} — գլխավոր`}
+            className="group flex min-w-0 max-w-[70%] items-center gap-2.5 sm:max-w-none sm:gap-3"
+            aria-label={formatHy(hy.a11y.ariaHomeLogo, {
+              siteName: hy.site.name,
+            })}
           >
-            <span className="shrink-0 scale-[0.9] sm:scale-100">
-              <BrandLogo size={40} priority />
+            <span className="shrink-0 transition duration-300 group-hover:scale-105">
+              <BrandLogo size={42} priority />
             </span>
             <div className="min-w-0 flex flex-col leading-tight">
-              <span className="font-display text-base font-bold tracking-tight text-ink sm:text-lg">
+              <span className="font-display text-base font-extrabold tracking-display-tight sm:text-lg">
                 {siteName}
               </span>
-              <span className="line-clamp-2 sm:truncate text-[9px] font-semibold uppercase leading-tight tracking-[0.1em] text-gold-bright min-[400px]:line-clamp-1 min-[400px]:text-[10px] sm:tracking-[0.18em]">
+              <span className="line-clamp-2 text-[9px] font-semibold uppercase leading-tight tracking-[0.14em] text-gold/90 min-[400px]:line-clamp-1 min-[400px]:text-[10px] sm:tracking-[0.18em]">
                 {siteTagline}
               </span>
             </div>
           </Link>
           <nav
-            className="hidden items-center gap-5 text-sm font-medium text-ink-soft lg:flex"
-            aria-label="Հիմնական նավիգացիա"
+            className="hidden items-center gap-1 lg:flex xl:gap-2"
+            aria-label={hy.a11y.navMain}
           >
             {nav.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
-                className="transition hover:text-ink"
+                className="link-nav rounded-full px-2.5 py-1.5"
               >
                 {item.label}
               </a>
@@ -199,23 +205,24 @@ export function MonaiqLanding() {
           </nav>
           <a
             href="#waitlist"
-            className="flex h-10 min-w-[4.5rem] shrink-0 items-center justify-center rounded-full border border-gold/40 bg-gold px-3 text-xs font-bold text-on-accent shadow-gold sm:h-auto sm:min-w-0 sm:px-4 sm:py-2 sm:text-sm"
+            className="group relative flex h-10 min-w-[4.5rem] shrink-0 items-center justify-center overflow-hidden rounded-full border border-gold/35 bg-gradient-to-b from-gold/95 to-gold/75 px-3 text-xs font-extrabold text-on-accent shadow-gold transition active:scale-[0.98] min-[400px]:px-4 min-[400px]:text-sm sm:min-w-0 sm:py-2.5"
           >
-            Գրանցվել
+            <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/60 to-transparent transition duration-500 group-hover:translate-x-full motion-reduce:transition-none" />
+            <span className="relative">{hy.header.ctaRegister}</span>
           </a>
         </div>
         <div
-          className={`border-t border-sage/20 bg-paper/95 py-0 lg:hidden ${pageGutter}`}
+          className={`border-t border-ink/6 bg-paper-elevated/30 py-0 backdrop-blur-sm lg:hidden ${pageGutter}`}
         >
           <nav
-            className="scrollbar-none -mx-0 flex snap-x snap-mandatory gap-0 overflow-x-auto overflow-y-hidden py-2.5 sm:justify-center sm:overflow-visible sm:py-2"
-            aria-label="Էջի բաժիններ"
+            className="scrollbar-none -mx-0 flex snap-x snap-mandatory gap-1 overflow-x-auto overflow-y-hidden py-2.5 sm:justify-center sm:gap-0 sm:overflow-visible"
+            aria-label={hy.a11y.navPageSections}
           >
             {nav.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
-                className="snap-center shrink-0 rounded-full py-2.5 pl-3 pr-2 text-center text-xs font-medium leading-tight text-ink-soft first:pl-0 last:pr-0 active:text-ink sm:shrink sm:px-1 sm:py-0 sm:first:pl-0"
+                className="snap-center shrink-0 rounded-full border border-transparent px-3 py-2 text-center text-xs font-medium leading-tight text-ink-soft/95 transition first:pl-0 last:pr-0 hover:border-gold/20 hover:text-ink active:border-gold/30 sm:shrink sm:px-2 sm:py-1.5"
               >
                 {item.label}
               </a>
@@ -226,93 +233,101 @@ export function MonaiqLanding() {
 
       <main id="main">
         <section
-          className="relative overflow-x-clip border-b border-sage/25 py-12 sm:py-20 md:py-24"
+          id="hero"
+          className="relative border-b border-ink/6"
           aria-labelledby="hero-heading"
         >
-          <div className={`mx-auto max-w-6xl ${pageGutter}`}>
-            <div className="mb-5 flex flex-col gap-3 min-[420px]:flex-row min-[420px]:flex-wrap min-[420px]:items-center">
-              <BrandLogo variant="wave" size={36} />
-              <p className="inline-flex max-w-full items-start gap-2 rounded-full border border-sage/50 bg-paper-elevated px-3 py-2 text-left text-[11px] font-semibold leading-snug text-ink min-[420px]:items-center min-[420px]:py-1.5 sm:text-xs">
-                <SparkIcon className="mt-0.5 min-[420px]:mt-0" />
-                <span className="min-w-0">
-                  Շուտով · Հայաստան, դրամ, iOS եւ Android
+          <div
+            className={`relative mx-auto max-w-6xl ${pageGutter} pb-12 pt-8 sm:pb-20 sm:pt-12 md:pb-24 md:pt-16`}
+          >
+            <div className="reveal-hero-delay relative">
+              <h1
+                id="hero-heading"
+                className="font-display text-balance text-[clamp(1.65rem,6vw+0.3rem,3.9rem)] font-black leading-[1.06] tracking-display-tight"
+              >
+                <span className="text-gradient-hero">
+                  {hy.hero.titleGradient}
                 </span>
+                <br className="max-sm:block sm:hidden" />
+                <span className="text-ink/95">{hy.hero.titleMid}</span>
+                <p className="whitespace-nowrap text-gold-bright/95 sm:whitespace-normal">
+                  {siteTagline.toLowerCase()}
+                </p>
+              </h1>
+              <p className="mt-6 max-w-2xl text-balance text-[0.95rem] leading-[1.75] text-ink-soft/95 sm:mt-8 sm:max-w-2xl sm:text-lg sm:leading-[1.7]">
+                {hy.hero.lead}
+                <span className="font-bold text-ink/95">
+                  {hy.hero.leadEmphasis}
+                </span>
+                {hy.hero.leadEnd}
               </p>
             </div>
-            <h1
-              id="hero-heading"
-              className="font-display text-balance text-[clamp(1.45rem,5.5vw,3.4rem)] font-bold leading-[1.1] tracking-tight text-ink sm:leading-[1.12] md:text-6xl"
-            >
-              <span className="text-gold-bright">Ձեր ֆինանսական ընկերը</span>
-              <span className="text-ink"> — </span>
-              <span className="bg-gradient-to-r from-navy to-ink bg-clip-text text-transparent">
-                խելացի ֆինանսներ
-              </span>{" "}
-              ձեր գրպանի մեջ
-            </h1>
-            <p className="mt-5 max-w-2xl text-balance text-[0.9375rem] leading-[1.65] text-ink-soft sm:mt-6 sm:text-lg sm:leading-relaxed">
-              Գրանցեք եկամուտներն ու ծախսերը, տեսեք հաշիվն ու միտումը, կառավարեք
-              հաշիվ-ապրանքագրերն ու պարտքերը, հարցրեք{" "}
-              <strong className="font-semibold text-ink">
-                ձեր տվյալներին հիմնվող AI-ին
-              </strong>
-              . Այստեղ ոչ թե ընդհանուր ներդրումային խորհուրդ, այլ ձեր գանձի
-              հաշվարկ. Անվճար փորձնական հերթագիրը՝ ներքևում.
-            </p>
-            <div className="mt-8 flex max-w-2xl flex-col gap-4 sm:mt-10">
+            <div className="reveal-hero-delay-2 mt-8 flex w-full max-w-2xl flex-col gap-4 sm:mt-10">
+              <p className="text-xs font-semibold uppercase tracking-widest text-sage/90 sm:text-sm">
+                {hy.hero.downloadWhen}
+              </p>
               <ComingSoonStores />
             </div>
             <div
               id="waitlist"
-              className="mt-10 w-full max-w-2xl border-t border-sage/30 pt-8 sm:mt-14 sm:pt-10"
+              className="reveal-hero-delay-3 relative z-[1] mt-12 w-full sm:mt-16"
             >
+              <div
+                className="absolute -inset-4 -z-10 rounded-[2rem] bg-gradient-to-br from-gold/8 via-transparent to-sage/10 blur-2xl"
+                aria-hidden
+              />
               <WaitlistForm />
             </div>
           </div>
-          <div
-            className="pointer-events-none absolute -right-16 top-4 h-56 w-56 rounded-full bg-gold/15 blur-3xl max-md:opacity-40 sm:-right-24 sm:top-0 sm:h-80 sm:w-80 sm:opacity-100"
-            aria-hidden
-          />
-          <div
-            className="pointer-events-none absolute -left-12 bottom-0 h-48 w-48 rounded-full bg-sage/20 blur-3xl max-md:opacity-50 sm:-left-20 sm:h-64 sm:w-64"
-            aria-hidden
-          />
         </section>
 
         <section
           id="features"
-          className="border-b border-sage/20 bg-paper-elevated/30 py-12 sm:py-16 md:py-20"
+          className="relative border-b border-ink/6 py-16 sm:py-20 md:py-24"
           aria-labelledby="features-heading"
         >
           <div className={`mx-auto max-w-6xl ${pageGutter}`}>
-            <h2
-              id="features-heading"
-              className="font-display text-[clamp(1.35rem,4vw,2.25rem)] font-bold text-ink sm:text-3xl md:text-4xl"
-            >
-              Մի հոսք, բոլոր գործիքներ
-            </h2>
-            <p className="mt-3 max-w-2xl text-[0.9375rem] leading-relaxed text-ink-soft sm:text-base">
-              Նույն տրամաբանությամբ, ինչ հավելվածում. պարզ, հանգիստ, գործնական.
-            </p>
-            <ul className="mt-8 grid grid-cols-1 gap-3 min-[500px]:grid-cols-2 sm:mt-10 sm:gap-4 lg:grid-cols-3">
+            <div className="max-w-2xl">
+              <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-gold/90 sm:text-sm">
+                {hy.features.kicker}
+              </p>
+              <h2
+                id="features-heading"
+                className="mt-2 font-display text-[clamp(1.45rem,4.2vw,2.55rem)] font-extrabold text-balance tracking-display-tight"
+              >
+                {hy.features.title}
+              </h2>
+              <p className="mt-3 text-[0.95rem] leading-relaxed text-ink-soft/95 sm:text-base">
+                {hy.features.subtitle}
+              </p>
+            </div>
+            <ul className="stagger-children mt-10 grid grid-cols-1 gap-4 min-[500px]:grid-cols-2 sm:mt-12 sm:gap-5 lg:grid-cols-3">
               {featureCards.map((f) => (
                 <li
                   key={f.title}
-                  className="group relative min-w-0 overflow-hidden rounded-2xl border border-sage/40 bg-paper-elevated/90 p-4 shadow-lift transition hover:border-gold/40 sm:p-6"
+                  className="group relative min-w-0 overflow-hidden rounded-2xl border border-ink/[0.09] glass-card p-5 transition duration-500 motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-gold/30 motion-safe:hover:shadow-lift sm:p-6"
                 >
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-gold-bright/95">
-                    {f.tag}
-                  </span>
-                  <h3 className="mt-1.5 font-display text-base font-bold text-ink sm:mt-2 sm:text-lg md:text-xl">
-                    {f.title}
-                  </h3>
-                  <p className="mt-1.5 text-[0.8125rem] leading-relaxed text-ink-soft sm:mt-2 sm:text-sm">
-                    {f.desc}
-                  </p>
                   <div
-                    className="absolute -right-8 -top-8 size-28 rounded-full bg-gold/10 opacity-0 blur-2xl transition group-hover:opacity-100"
+                    className="pointer-events-none absolute -right-6 -top-6 size-32 rounded-full bg-gold/5 blur-2xl transition group-hover:bg-gold/10"
                     aria-hidden
                   />
+                  <div className="mb-2 flex items-center justify-between gap-2">
+                    <span className="text-xs font-extrabold uppercase tracking-widest text-gold/85">
+                      {f.tag}
+                    </span>
+                    <span
+                      className="font-mono text-lg text-ink/25 transition group-hover:text-gold/40"
+                      aria-hidden
+                    >
+                      {f.icon}
+                    </span>
+                  </div>
+                  <h3 className="font-display text-lg font-extrabold sm:text-xl">
+                    {f.title}
+                  </h3>
+                  <p className="mt-2 text-[0.875rem] leading-relaxed text-ink-soft/90 sm:text-[0.9375rem]">
+                    {f.desc}
+                  </p>
                 </li>
               ))}
             </ul>
@@ -321,151 +336,122 @@ export function MonaiqLanding() {
 
         <section
           id="ai"
-          className="relative overflow-x-clip border-b border-sage/20 py-12 sm:py-16 md:py-20"
+          className="relative border-b border-ink/6 py-16 sm:py-20 md:py-24"
           aria-labelledby="ai-heading"
         >
           <div className={`mx-auto max-w-6xl ${pageGutter}`}>
-            <div className="grid min-w-0 items-center gap-8 md:gap-10 lg:grid-cols-2">
-              <div className="min-w-0">
+            <div className="grid min-w-0 items-stretch gap-10 lg:grid-cols-2 lg:gap-14">
+              <div className="reveal-hero min-w-0 self-center">
+                <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-sage/90">
+                  {hy.ai.kicker}
+                </p>
                 <h2
                   id="ai-heading"
-                  className="font-display text-[clamp(1.3rem,4vw,2.2rem)] font-bold text-ink sm:text-3xl md:text-4xl"
+                  className="mt-2 font-display text-[clamp(1.4rem,4vw,2.35rem)] font-extrabold text-balance tracking-display-tight"
                 >
-                  AI, որը կարդում է{" "}
-                  <span className="text-gold-bright">ձեր գրանցումները</span>, ոչ
-                  թե համացանցը
+                  {hy.ai.titleBefore}
+                  <span className="text-gold-bright/95">
+                    {hy.ai.titleHighlight}
+                  </span>
+                  {hy.ai.titleAfter}
                 </h2>
-                <p className="mt-3 text-[0.9375rem] leading-relaxed text-ink-soft sm:mt-4 sm:text-base">
-                  Բյուջե, վճարունակություն, նախորդ ծախսեր, ինչն առաջնահերթ է
-                  վճարել. Հարցրեք սովոր մարդկային ձեւով.
+                <p className="mt-4 text-[0.95rem] leading-relaxed text-ink-soft/95 sm:text-base">
+                  {hy.ai.lead}
                 </p>
-                <ul className="mt-5 space-y-2 text-[0.9375rem] text-ink sm:mt-6 sm:space-y-2.5 sm:text-sm">
-                  {[
-                    "Կարողա՞մ հիմա կատարել այդ գնումը.",
-                    "Կհասնի՞ մնացորդս առաջիկա հաշիվ-ապրանքագիրներին.",
-                    "Որտե՞ղ է գնացել գումարի մեծ մասը վերջին 30 օրում.",
-                    "Ինչպե՞ս է բաժանվում ծախսը՝ քարտի ու կանխիկի միջեւ.",
-                  ].map((q) => (
+                <ul className="mt-6 space-y-2.5 text-[0.9rem] sm:space-y-3 sm:text-sm">
+                  {hy.ai.sampleQuestions.map((q) => (
                     <li
                       key={q}
-                      className="flex gap-2 rounded-2xl border border-sage/40 bg-paper-elevated/60 px-3 py-2.5 leading-snug"
+                      className="flex gap-2.5 rounded-2xl border border-ink/[0.07] glass-inset bg-white/60 px-3 py-2.5 leading-snug shadow-sm backdrop-blur-sm"
                     >
-                      <span className="shrink-0 text-gold-bright" aria-hidden>
-                        —
+                      <span className="mt-0.5 shrink-0 text-gold" aria-hidden>
+                        ✓
                       </span>
-                      <span className="min-w-0">{q}</span>
+                      <span className="min-w-0 text-ink/95">{q}</span>
                     </li>
                   ))}
                 </ul>
               </div>
-              <div className="relative min-w-0">
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-gold/15 via-sage/20 to-gold/10 blur-2xl" />
+              <div className="reveal-hero-delay-2 relative min-w-0">
+                <div className="absolute inset-0 -z-10 rounded-[2rem] bg-gradient-to-br from-gold/20 via-sage/15 to-gold/10 blur-3xl motion-reduce:opacity-50" />
                 <div
-                  className="relative overflow-hidden rounded-2xl border border-sage/35 p-4 shadow-lift min-[400px]:rounded-3xl min-[400px]:p-5 sm:p-6"
+                  className="relative overflow-hidden rounded-2xl border border-ink/10 glass-card p-4 shadow-lift min-[400px]:rounded-3xl min-[400px]:p-5 sm:p-6"
                   style={{ background: "var(--card-well)" }}
                 >
-                  <div className="mb-2 flex min-h-0 items-center justify-between gap-2 text-xs text-slate-300 sm:mb-3">
-                    <span>Օգնական</span>
-                    <span className="rounded-full border border-sage/40 bg-sage/20 px-2 py-0.5 text-[10px] font-semibold text-paper">
-                      Ձեր տվյալ
+                  <div
+                    className="pointer-events-none absolute inset-0 bg-[linear-gradient(110deg,transparent_35%,rgba(255,255,255,0.55)_50%,transparent_65%)] bg-[length:200%_100%] motion-safe:animate-shimmer motion-reduce:animate-none"
+                    aria-hidden
+                  />
+                  <div className="mb-2 flex min-h-0 items-center justify-between gap-2 text-xs text-ink-soft sm:mb-3">
+                    <span>{hy.ai.mock.header}</span>
+                    <span className="rounded-full border border-gold/30 bg-gold/10 px-2 py-0.5 text-[10px] font-semibold text-gold-bright/95">
+                      {hy.ai.mock.badge}
                     </span>
                   </div>
                   <div className="space-y-2.5 text-[0.875rem] leading-relaxed min-[400px]:space-y-3 min-[400px]:text-sm">
-                    <div className="rounded-xl border border-sage/20 bg-ink/30 p-2.5 text-slate-200 min-[400px]:rounded-2xl min-[400px]:p-3">
-                      <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400 min-[400px]:text-[10px]">
-                        Դուք
+                    <div className="rounded-xl border border-ink/8 bg-paper-elevated/90 p-2.5 text-ink/85 min-[400px]:rounded-2xl min-[400px]:p-3">
+                      <span className="text-[9px] font-bold uppercase tracking-wider text-ink-soft min-[400px]:text-[10px]">
+                        {hy.ai.mock.userLabel}
                       </span>
-                      <p className="mt-1 min-w-0 break-words">
-                        Կհասնի՞ հաշիվս վարձի ու կոմունալներին վճարելու՝ այս
-                        շաբաթ.
+                      <p className="mt-1 min-w-0 break-words text-ink/90">
+                        {hy.ai.mock.userMessage}
                       </p>
                     </div>
                     <div
-                      className="rounded-xl border p-2.5 text-slate-100 min-[400px]:rounded-2xl min-[400px]:p-3"
+                      className="rounded-xl border p-2.5 text-ink/95 min-[400px]:rounded-2xl min-[400px]:p-3"
                       style={{
-                        borderColor: "rgba(212, 175, 55, 0.35)",
+                        borderColor: "rgba(201, 162, 55, 0.35)",
                         background:
-                          "linear-gradient(180deg, rgba(212, 175, 55, 0.12), transparent)",
+                          "linear-gradient(180deg, rgba(201, 162, 55, 0.12), rgba(255, 252, 248, 0.9))",
                       }}
                     >
                       <span
                         className="text-[9px] font-bold uppercase tracking-wider min-[400px]:text-[10px]"
-                        style={{ color: "#D4AF37" }}
+                        style={{ color: "var(--gold-bright)" }}
                       >
                         {siteName}
                       </span>
-                      <p className="mt-1 min-w-0 break-words leading-relaxed">
-                        Գրանցումներիդ հիման վրա՝ ահա, թե ինչպես է{" "}
-                        <span className="font-semibold" style={{ color: "#E8C547" }}>
-                          կազմակերպում վճարումները
-                        </span>{" "}
-                        ու ինչն է այս շաբաթ ավելի հրատապ.
+                      <p className="mt-1 min-w-0 break-words leading-relaxed text-ink/85">
+                        {hy.ai.mock.assistantMessage}
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
-
-        <section
-          id="pillars"
-          className="border-b border-sage/20 bg-paper-elevated/20 py-12 sm:py-16 md:py-20"
-          aria-labelledby="pillars-heading"
-        >
-          <div className={`mx-auto max-w-6xl ${pageGutter}`}>
-            <h2
-              id="pillars-heading"
-              className="font-display text-[clamp(1.3rem,4vw,2.2rem)] font-bold text-ink sm:text-3xl md:text-4xl"
-            >
-              Ինչու ընտրել {siteName}-ը
-            </h2>
-            <div className="mt-6 grid grid-cols-1 gap-3 min-[500px]:grid-cols-2 min-[500px]:gap-4 sm:mt-8">
-              {pillars.map((p) => (
-                <div
-                  key={p.title}
-                  className="min-w-0 rounded-2xl border border-sage/40 bg-paper-elevated/80 p-4 shadow-lift min-[500px]:p-6"
-                >
-                  <h3 className="font-display text-base font-bold text-ink sm:text-lg">
-                    {p.title}
-                  </h3>
-                  <p className="mt-2 text-[0.875rem] leading-relaxed text-ink-soft sm:text-sm">
-                    {p.body}
-                  </p>
-                </div>
-              ))}
             </div>
           </div>
         </section>
 
         <section
           id="faq"
-          className="py-12 sm:py-16 md:py-20"
+          className="py-16 sm:py-20 md:py-24"
           aria-labelledby="faq-heading"
         >
           <div className={`mx-auto w-full min-w-0 max-w-2xl ${pageGutter}`}>
             <h2
               id="faq-heading"
-              className="font-display text-[clamp(1.3rem,4vw,2.2rem)] font-bold text-ink sm:text-3xl md:text-4xl"
+              className="font-display text-[clamp(1.4rem,4vw,2.35rem)] font-extrabold tracking-display-tight"
             >
-              Հաճախ տրված հարցեր
+              {hy.faq.title}
             </h2>
-            <div className="mt-5 space-y-2 sm:mt-6">
+            <div className="mt-6 space-y-2 sm:mt-7">
               {faqItems.map((item) => (
                 <details
                   key={item.q}
-                  className="group min-w-0 rounded-2xl border border-sage/40 bg-paper-elevated/50 p-1 open:border-gold/35"
+                  className="group min-w-0 rounded-2xl border border-ink/[0.09] glass-card transition-shadow open:border-gold/30 open:shadow-md motion-safe:open:-translate-y-px"
                 >
-                  <summary className="flex min-h-[48px] cursor-pointer list-none items-center rounded-xl px-3 py-2 text-left text-[0.9rem] font-semibold text-ink [&::-webkit-details-marker]:hidden min-[400px]:px-4 min-[400px]:text-sm">
-                    <span className="flex w-full min-w-0 items-start justify-between gap-3 pr-0.5">
-                      <span className="min-w-0 break-words">{item.q}</span>
-                      <span className="mt-0.5 shrink-0 text-lg leading-none text-gold-bright/90 transition group-open:rotate-45">
-                        +
-                      </span>
+                  <summary className="flex min-h-12 w-full cursor-pointer list-none items-center gap-2 rounded-2xl px-4 py-2.5 text-left text-sm font-extrabold text-ink/95 sm:px-4 sm:py-3 sm:text-sm [&::-webkit-details-marker]:hidden">
+                    <span className="min-w-0 flex-1 break-words pr-1">
+                      {item.q}
+                    </span>
+                    <span
+                      className="flex size-8 shrink-0 items-center justify-center rounded-full border border-gold/25 bg-gold/5 text-gold-bright/95 transition group-open:rotate-45"
+                      aria-hidden
+                    >
+                      +
                     </span>
                   </summary>
-                  <p className="border-t border-sage/30 px-3 py-2.5 text-[0.9rem] leading-relaxed text-ink-soft min-[400px]:px-4 min-[400px]:py-3 min-[400px]:text-sm">
+                  <p className="border-t border-ink/6 px-4 py-3 text-sm leading-relaxed text-ink-soft/95 sm:px-4 sm:py-3.5 sm:text-sm">
                     {item.a}
                   </p>
                 </details>
@@ -475,7 +461,7 @@ export function MonaiqLanding() {
         </section>
 
         <section
-          className="border-t border-sage/25 bg-gradient-to-b from-sage/10 to-paper py-12 sm:py-16 md:py-20"
+          className="border-t border-ink/[0.09] bg-gradient-to-b from-sage/5 to-transparent py-16 sm:py-20"
           aria-labelledby="cta-heading"
         >
           <div
@@ -483,48 +469,126 @@ export function MonaiqLanding() {
           >
             <h2
               id="cta-heading"
-              className="font-display text-[clamp(1.3rem,4vw,2.2rem)] font-bold text-ink sm:text-3xl md:text-4xl"
+              className="font-display text-[clamp(1.4rem,4vw,2.35rem)] font-extrabold tracking-display-tight"
             >
-              Ֆինանսները թող լինեն{" "}
-              <span className="italic text-gold-bright/95">պարզ</span> իսկ, ոչ
-              ծածուկ
+              {hy.cta.titleBefore}
             </h2>
-            <p className="mt-3 text-[0.9375rem] text-ink-soft sm:text-base">
-              {siteTagline} – վիճակագրությամբ, ֆինանսական պլաններով ու AI-ով, որը
-              ձեզ ճանաչում է ձեր թվերով.
-            </p>
-            <a
-              href="#waitlist"
-              className="mt-5 inline-flex min-h-12 w-full min-w-0 max-w-sm items-center justify-center rounded-2xl border border-sage/50 bg-paper-elevated px-6 py-2.5 text-sm font-bold text-ink shadow-lift transition hover:border-gold/50 min-[400px]:w-auto min-[400px]:max-w-none min-[400px]:px-8"
+            <div
+              id="contact"
+              className="mx-auto mt-10 w-full max-w-2xl text-left sm:text-center"
+              aria-label={hy.a11y.contactSection}
             >
-              Վերադառնալ գրանցման ձեւին
-            </a>
-            <p className="mt-6 text-sm text-ink-soft">Խանութներ, շուտ</p>
+              <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-gold/90">
+                {hy.contact.kicker}
+              </p>
+              <h3 className="mt-2 font-display text-[clamp(1.1rem,3vw,1.65rem)] font-extrabold tracking-display-tight text-ink/95">
+                {hy.contact.title}
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-ink-soft/95 sm:text-[0.9375rem]">
+                {hy.contact.subtitle}
+              </p>
+              <ul className="stagger-children mt-8 grid grid-cols-1 gap-3 min-[480px]:grid-cols-3 sm:mt-9 sm:gap-4">
+                <li className="min-w-0">
+                  <a
+                    href={hy.contact.instagramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="contact-channel-card group flex min-h-[4.5rem] items-center gap-4 rounded-2xl border border-ink/[0.09] glass-card px-4 py-3 text-left transition duration-300 motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-gold/35 motion-safe:hover:shadow-lift sm:min-h-0 sm:flex-col sm:items-center sm:justify-center sm:gap-3 sm:px-3 sm:py-6 sm:text-center"
+                  >
+                    <span
+                      className="contact-channel-icon flex size-12 shrink-0 items-center justify-center rounded-2xl border border-gold/25 bg-gradient-to-br from-gold/15 to-sage/10 text-gold-bright transition duration-300 motion-safe:animate-float-slow motion-safe:group-hover:scale-110 motion-reduce:animate-none sm:size-14"
+                      style={{ animationDelay: "0s" }}
+                    >
+                      <InstagramIcon className="size-2" />
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-[10px] font-extrabold uppercase tracking-widest text-gold/85">
+                        {hy.contact.labelInstagram}
+                      </span>
+                      <span className="mt-0.5 block truncate text-sm font-bold text-ink/95 sm:mt-1">
+                        {hy.contact.instagramHandle}
+                      </span>
+                    </span>
+                  </a>
+                </li>
+                <li className="min-w-0">
+                  <a
+                    href={`mailto:${hy.contact.email}`}
+                    className="contact-channel-card group flex min-h-[4.5rem] items-center gap-4 rounded-2xl border border-ink/[0.09] glass-card px-4 py-3 text-left transition duration-300 motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-gold/35 motion-safe:hover:shadow-lift sm:min-h-0 sm:flex-col sm:items-center sm:justify-center sm:gap-3 sm:px-3 sm:py-6 sm:text-center"
+                  >
+                    <span
+                      className="contact-channel-icon flex size-12 shrink-0 items-center justify-center rounded-2xl border border-gold/25 bg-gradient-to-br from-gold/15 to-sage/10 text-gold-bright transition duration-300 motion-safe:animate-float-slow motion-safe:group-hover:scale-110 motion-reduce:animate-none sm:size-14"
+                      style={{ animationDelay: "0.35s" }}
+                    >
+                      <MailIcon className="size-6 sm:size-7" />
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-[10px] font-extrabold uppercase tracking-widest text-gold/85">
+                        {hy.contact.labelEmail}
+                      </span>
+                      <span className="mt-0.5 block break-all text-sm font-bold text-ink/95 sm:mt-1">
+                        {hy.contact.email}
+                      </span>
+                    </span>
+                  </a>
+                </li>
+                <li className="min-w-0">
+                  <a
+                    href={`tel:${hy.contact.phoneTel.replace(/\s/g, "")}`}
+                    className="contact-channel-card group flex min-h-[4.5rem] items-center gap-4 rounded-2xl border border-ink/[0.09] glass-card px-4 py-3 text-left transition duration-300 motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-gold/35 motion-safe:hover:shadow-lift sm:min-h-0 sm:flex-col sm:items-center sm:justify-center sm:gap-3 sm:px-3 sm:py-6 sm:text-center"
+                  >
+                    <span
+                      className="contact-channel-icon flex size-12 shrink-0 items-center justify-center rounded-2xl border border-gold/25 bg-gradient-to-br from-gold/15 to-sage/10 text-gold-bright transition duration-300 motion-safe:animate-float-slow motion-safe:group-hover:scale-110 motion-reduce:animate-none sm:size-14"
+                      style={{ animationDelay: "0.7s" }}
+                    >
+                      <PhoneIcon className="size-6 sm:size-7" />
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-[10px] font-extrabold uppercase tracking-widest text-gold/85">
+                        {hy.contact.labelPhone}
+                      </span>
+                      <span className="mt-0.5 block text-sm font-bold text-ink/95 sm:mt-1">
+                        {hy.contact.phoneDisplay}
+                      </span>
+                    </span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            {/* <a
+              href="#waitlist"
+              className="mt-6 inline-flex min-h-12 w-full min-w-0 max-w-sm items-center justify-center rounded-2xl border border-gold/30 glass-panel px-6 py-2.5 text-sm font-extrabold text-ink/95 transition hover:border-gold/50 min-[400px]:w-auto min-[400px]:max-w-none min-[400px]:px-8"
+            >
+              {hy.cta.button}
+            </a> */}
+            {/* <p className="mt-6 text-sm text-ink-soft/90">{hy.cta.storesLine}</p>
             <div className="mt-3 flex w-full min-w-0 flex-wrap justify-center">
               <ComingSoonStores />
-            </div>
+            </div> */}
           </div>
         </section>
       </main>
 
-      <footer className="border-t border-sage/30 bg-paper-elevated/50 py-6 sm:py-8">
+      <footer className="border-t border-ink/[0.09] glass-panel py-8 sm:py-10">
         <div
-          className={`mx-auto flex max-w-6xl flex-col items-center gap-4 text-center min-[500px]:flex-row min-[500px]:items-start min-[500px]:justify-between min-[500px]:text-left ${pageGutter}`}
+          className={`mx-auto flex max-w-6xl flex-col items-center gap-5 text-center min-[500px]:flex-row min-[500px]:items-start min-[500px]:justify-between min-[500px]:text-left ${pageGutter}`}
         >
-          <div className="flex min-w-0 max-w-md flex-col items-center gap-2 min-[500px]:flex-row min-[500px]:items-center min-[500px]:text-left">
-            <BrandLogo size={44} />
+          <div className="flex min-w-0 max-w-md flex-col items-center gap-3 min-[500px]:flex-row min-[500px]:items-center min-[500px]:text-left">
+            <BrandLogo size={48} />
             <div className="min-w-0">
-              <p className="font-display text-base font-bold text-ink">
+              <p className="font-display text-base font-extrabold text-ink">
                 {siteName}
               </p>
-              <p className="text-xs leading-snug text-ink-soft">
-                Անձնական ֆինանս, ոչ ֆինանսական աշխոց, ոչ ավանդ
+              <p className="text-xs leading-snug text-ink-soft/90">
+                {hy.site.tagline}
               </p>
             </div>
           </div>
-          <p className="max-w-prose text-xs leading-relaxed text-ink-soft/90 min-[500px]:max-w-sm min-[500px]:text-left">
-            © {new Date().getFullYear()} {siteName}. Տվյալները տեղեկատու են,
-            ֆինանսական կամ իրավական խորհուրդ չեն հանդիսանում.
+          <p className="max-w-prose text-xs leading-relaxed text-ink-soft/80 min-[500px]:max-w-sm min-[500px]:text-left">
+            {formatHy(hy.footer.legal, {
+              year: new Date().getFullYear(),
+              siteName: hy.site.name,
+            })}
           </p>
         </div>
       </footer>

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { siteUrl } from "@/lib/site";
+import { hy } from "@/messages/hy";
 
 const bodySchema = z.object({
   email: z.string().email(),
@@ -61,7 +62,7 @@ export async function POST(request: Request) {
     json = await request.json();
   } catch {
     return NextResponse.json(
-      { error: "Անհրաժեշտ է JSON մարմին։" },
+      { error: hy.api.jsonRequired },
       { status: 400 }
     );
   }
@@ -69,7 +70,7 @@ export async function POST(request: Request) {
   const parsed = bodySchema.safeParse(json);
   if (!parsed.success) {
     return NextResponse.json(
-      { error: "Խնդրում ենք մուտքագրել գործող էլ. փոստի հասցե։" },
+      { error: hy.waitlist.errorInvalidEmail },
       { status: 400 }
     );
   }
@@ -95,9 +96,7 @@ export async function POST(request: Request) {
         console.error("[waitlist] webhook failed", res.status);
         return NextResponse.json(
           {
-            error:
-              fromBackend ??
-              "Ժամանակավորորեն հնարավոր չէ պահել։ Կրկին փորձեք ավելի ուշ։",
+            error: fromBackend ?? hy.api.waitlistStoreFailed,
           },
           { status: res.status >= 400 && res.status < 600 ? res.status : 502 }
         );
@@ -109,7 +108,7 @@ export async function POST(request: Request) {
     } catch (e) {
       console.error("[waitlist] webhook", e);
       return NextResponse.json(
-        { error: "Կապի խնդիր։ Կրկին փորձեք ավելի ուշ։" },
+        { error: hy.api.waitlistNetwork },
         { status: 502 }
       );
     }
