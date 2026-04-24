@@ -26,6 +26,10 @@ const title = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+  icons: {
+    icon: "/brand/only-icon.png",
+    apple: "/brand/only-icon.png",
+  },
   title,
   description: defaultDescription,
   applicationName: siteName,

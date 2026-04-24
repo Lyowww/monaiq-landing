@@ -114,6 +114,19 @@
   }
 }
 
+/** Very soft «breathing» of the page wash — no layout shift */
+@keyframes mesh-breathe {
+  0%,
+  100% {
+    opacity: 1;
+    filter: saturate(1);
+  }
+  50% {
+    opacity: 0.97;
+    filter: saturate(1.06);
+  }
+}
+
 @keyframes fade-in-up {
   from {
     opacity: 0;
@@ -155,6 +168,12 @@
       radial-gradient(ellipse 80% 60% at 80% 20%, var(--aurora-3), transparent 50%),
       radial-gradient(ellipse 70% 50% at 50% 95%, var(--aurora-2), transparent 58%),
       linear-gradient(180deg, #fffaf2 0%, var(--paper) 40%, #f0ebe3 100%);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .bg-mesh-aurora-animate {
+      animation: mesh-breathe 22s ease-in-out infinite;
+    }
   }
 
   .bg-grid-fine {

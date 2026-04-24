@@ -1,4 +1,12 @@
+"use client";
+
 import Link from "next/link";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import { siteName, siteTagline } from "@/lib/site";
 import { formatHy, hy } from "@/messages/hy";
 import { BrandLogo } from "./BrandLogo";
@@ -6,9 +14,7 @@ import { WaitlistForm } from "./WaitlistForm";
 
 const nav = hy.nav;
 const featureCards = hy.features.items;
-const pillars = hy.pillars.items;
 const faqItems = hy.faq.items;
-const pillarsTitle = formatHy(hy.pillars.title, { siteName: hy.site.name });
 
 function AppleIcon(props: { className?: string }) {
   return (
@@ -35,6 +41,7 @@ function GooglePlayIcon(props: { className?: string }) {
 function InstagramIcon(props: { className?: string }) {
   return (
     <svg
+      className={props.className}
       fill="currentColor"
       width="200px"
       height="200px"
@@ -78,13 +85,20 @@ function PhoneIcon(props: { className?: string }) {
   );
 }
 
-function ComingSoonStores() {
+function ComingSoonStores({ reduce }: { reduce: boolean }) {
+  const cardIn = (delay: number) => ({
+    initial: reduce ? false : ({ opacity: 0, y: 18, scale: 0.98 } as const),
+    animate: reduce ? undefined : { opacity: 1, y: 0, scale: 1 },
+    transition: { duration: 0.55, delay, ease: easeOut },
+  });
   return (
     <div className="grid w-full max-w-md grid-cols-1 gap-3 min-[420px]:grid-cols-2 min-[420px]:max-w-none sm:max-w-2xl">
-      <div
+      <motion.div
+        {...cardIn(0.52)}
         className="glass-card group flex min-h-[52px] cursor-not-allowed flex-col items-center justify-center gap-1 rounded-2xl px-4 py-3 text-center text-ink-soft transition duration-300 motion-safe:hover:shadow-lift sm:min-h-[56px] sm:flex-row sm:gap-2 sm:py-3.5"
         role="img"
         aria-label={hy.a11y.storeIos}
+        whileHover={reduce ? undefined : { y: -2, transition: { duration: 0.2 } }}
       >
         <AppleIcon className="size-5 shrink-0 text-gold-bright" />
         <div className="min-w-0 text-center sm:text-left">
@@ -95,11 +109,13 @@ function ComingSoonStores() {
             {hy.stores.soon}
           </p>
         </div>
-      </div>
-      <div
+      </motion.div>
+      <motion.div
+        {...cardIn(0.6)}
         className="glass-card group flex min-h-[52px] cursor-not-allowed flex-col items-center justify-center gap-1 rounded-2xl px-4 py-3 text-center text-ink-soft transition duration-300 motion-safe:hover:shadow-lift sm:min-h-[56px] sm:flex-row sm:gap-2 sm:py-3.5"
         role="img"
         aria-label={hy.a11y.storeAndroid}
+        whileHover={reduce ? undefined : { y: -2, transition: { duration: 0.2 } }}
       >
         <GooglePlayIcon className="size-5 shrink-0 text-gold-bright" />
         <div className="min-w-0 text-center sm:text-left">
@@ -110,31 +126,48 @@ function ComingSoonStores() {
             {hy.stores.soon}
           </p>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
 
 const pageGutter = "px-4 min-[400px]:px-5 sm:px-6 md:px-8";
 
+const easeOut = [0.22, 1, 0.36, 1] as const;
+const viewportReveal = {
+  once: true as const,
+  amount: 0.15 as const,
+  margin: "-10% 0px -5% 0px" as const,
+};
+
 function AuroraOrbs() {
+  const reduce = useReducedMotion();
+  const { scrollY } = useScroll();
+  const yA = useTransform(scrollY, [0, 900], [0, reduce ? 0 : 120]);
+  const yB = useTransform(scrollY, [0, 900], [0, reduce ? 0 : -90]);
+  const yC = useTransform(scrollY, [0, 700], [0, reduce ? 0 : 55]);
+  const scaleA = useTransform(scrollY, [0, 600], [1, reduce ? 1 : 1.06]);
+
   return (
     <>
-      <div
-        className="pointer-events-none absolute -left-1/4 top-0 h-[min(60vh,32rem)] w-[min(100vw,48rem)] rounded-full bg-glow-blob opacity-80 blur-[100px] motion-safe:animate-float-slow motion-reduce:animate-none"
+      <motion.div
+        style={{ y: yA, scale: scaleA }}
+        className="pointer-events-none absolute -left-1/4 top-0 h-[min(60vh,32rem)] w-[min(100vw,48rem)] rounded-full bg-glow-blob opacity-80 blur-[100px] motion-safe:animate-float-slow motion-reduce:animate-none will-change-transform"
         aria-hidden
       />
-      <div
-        className="pointer-events-none absolute -right-1/3 bottom-0 h-[min(50vh,28rem)] w-[min(90vw,40rem)] rounded-full bg-glow-blob motion-safe:opacity-50 motion-reduce:opacity-30 blur-[90px] motion-safe:animate-float-wide motion-reduce:animate-none"
+      <motion.div
+        className="pointer-events-none absolute -right-1/3 bottom-0 h-[min(50vh,28rem)] w-[min(90vw,40rem)] rounded-full bg-glow-blob motion-safe:opacity-50 motion-reduce:opacity-30 blur-[90px] motion-safe:animate-float-wide motion-reduce:animate-none will-change-transform"
         style={{
+          y: yB,
           background:
             "radial-gradient(circle, rgba(150, 185, 210, 0.22) 0%, transparent 68%)",
         }}
         aria-hidden
       />
-      <div
-        className="pointer-events-none absolute left-1/2 top-1/3 h-64 w-64 -translate-x-1/2 rounded-full motion-safe:animate-pulse-ring motion-reduce:opacity-40"
+      <motion.div
+        className="pointer-events-none absolute left-1/2 top-1/3 h-64 w-64 -translate-x-1/2 rounded-full motion-safe:animate-pulse-ring motion-reduce:opacity-40 will-change-transform"
         style={{
+          y: yC,
           background:
             "radial-gradient(circle, rgba(120, 170, 140, 0.18) 0%, transparent 70%)",
         }}
@@ -145,10 +178,12 @@ function AuroraOrbs() {
 }
 
 export function MonaiqLanding() {
+  const reduce = useReducedMotion();
+
   return (
     <div className="relative min-w-0 overflow-x-clip text-ink">
       <div
-        className="pointer-events-none fixed inset-0 -z-20 bg-mesh-aurora"
+        className="pointer-events-none fixed inset-0 -z-20 bg-mesh-aurora bg-mesh-aurora-animate motion-reduce:animate-none"
         aria-hidden
       />
       <div
@@ -163,9 +198,12 @@ export function MonaiqLanding() {
         {hy.a11y.skipToContent}
       </a>
 
-      <header
+      <motion.header
         className="sticky top-0 z-50 border-b border-ink/6 glass-panel motion-safe:transition-shadow motion-reduce:transition-none supports-[backdrop-filter]:bg-paper-elevated/80"
         style={{ paddingTop: "max(0.5rem, env(safe-area-inset-top))" }}
+        initial={reduce ? false : { y: -18, opacity: 0.92 }}
+        animate={reduce ? undefined : { y: 0, opacity: 1 }}
+        transition={{ duration: 0.7, ease: easeOut }}
       >
         <div
           className={`mx-auto flex min-h-14 max-w-6xl items-center justify-between gap-2 sm:min-h-16 sm:gap-4 ${pageGutter} py-2`}
@@ -193,23 +231,31 @@ export function MonaiqLanding() {
             className="hidden items-center gap-1 lg:flex xl:gap-2"
             aria-label={hy.a11y.navMain}
           >
-            {nav.map((item) => (
-              <a
+            {nav.map((item, i) => (
+              <motion.a
                 key={item.href}
                 href={item.href}
                 className="link-nav rounded-full px-2.5 py-1.5"
+                initial={reduce ? false : { opacity: 0, y: -8 }}
+                animate={reduce ? undefined : { opacity: 1, y: 0 }}
+                transition={{ delay: 0.12 + i * 0.05, ease: easeOut, duration: 0.45 }}
               >
                 {item.label}
-              </a>
+              </motion.a>
             ))}
           </nav>
-          <a
+          <motion.a
             href="#waitlist"
             className="group relative flex h-10 min-w-[4.5rem] shrink-0 items-center justify-center overflow-hidden rounded-full border border-gold/35 bg-gradient-to-b from-gold/95 to-gold/75 px-3 text-xs font-extrabold text-on-accent shadow-gold transition active:scale-[0.98] min-[400px]:px-4 min-[400px]:text-sm sm:min-w-0 sm:py-2.5"
+            initial={reduce ? false : { opacity: 0, scale: 0.92 }}
+            animate={reduce ? undefined : { opacity: 1, scale: 1 }}
+            transition={{ type: "spring", stiffness: 320, damping: 22, delay: 0.35 }}
+            whileHover={reduce ? undefined : { scale: 1.03 }}
+            whileTap={reduce ? undefined : { scale: 0.98 }}
           >
             <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/60 to-transparent transition duration-500 group-hover:translate-x-full motion-reduce:transition-none" />
             <span className="relative">{hy.header.ctaRegister}</span>
-          </a>
+          </motion.a>
         </div>
         <div
           className={`border-t border-ink/6 bg-paper-elevated/30 py-0 backdrop-blur-sm lg:hidden ${pageGutter}`}
@@ -229,7 +275,7 @@ export function MonaiqLanding() {
             ))}
           </nav>
         </div>
-      </header>
+      </motion.header>
 
       <main id="main">
         <section
@@ -240,44 +286,87 @@ export function MonaiqLanding() {
           <div
             className={`relative mx-auto max-w-6xl ${pageGutter} pb-12 pt-8 sm:pb-20 sm:pt-12 md:pb-24 md:pt-16`}
           >
-            <div className="reveal-hero-delay relative">
+            <div className="relative">
               <h1
                 id="hero-heading"
                 className="font-display text-balance text-[clamp(1.65rem,6vw+0.3rem,3.9rem)] font-black leading-[1.06] tracking-display-tight"
               >
-                <span className="text-gradient-hero">
+                <motion.span
+                  className="block text-gradient-hero"
+                  initial={reduce ? false : { opacity: 0, y: 28, filter: "blur(6px)" }}
+                  animate={reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
+                  transition={{ duration: 0.75, delay: 0.08, ease: easeOut }}
+                >
                   {hy.hero.titleGradient}
-                </span>
+                </motion.span>
                 <br className="max-sm:block sm:hidden" />
-                <span className="text-ink/95">{hy.hero.titleMid}</span>
-                <p className="whitespace-nowrap text-gold-bright/95 sm:whitespace-normal">
+                <motion.span
+                  className="block text-ink/95"
+                  initial={reduce ? false : { opacity: 0, y: 22 }}
+                  animate={reduce ? undefined : { opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: 0.18, ease: easeOut }}
+                >
+                  {hy.hero.titleMid}
+                </motion.span>
+                <motion.p
+                  className="whitespace-nowrap text-gold-bright/95 sm:whitespace-normal"
+                  initial={reduce ? false : { opacity: 0, y: 18, scale: 0.98 }}
+                  animate={reduce ? undefined : { opacity: 1, y: 0, scale: 1 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 120,
+                    damping: 20,
+                    delay: 0.25,
+                  }}
+                >
                   {siteTagline.toLowerCase()}
-                </p>
+                </motion.p>
               </h1>
-              <p className="mt-6 max-w-2xl text-balance text-[0.95rem] leading-[1.75] text-ink-soft/95 sm:mt-8 sm:max-w-2xl sm:text-lg sm:leading-[1.7]">
+              <motion.p
+                className="mt-6 max-w-2xl text-balance text-[0.95rem] leading-[1.75] text-ink-soft/95 sm:mt-8 sm:max-w-2xl sm:text-lg sm:leading-[1.7]"
+                initial={reduce ? false : { opacity: 0, y: 20 }}
+                animate={reduce ? undefined : { opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.38, ease: easeOut }}
+              >
                 {hy.hero.lead}
                 <span className="font-bold text-ink/95">
                   {hy.hero.leadEmphasis}
                 </span>
                 {hy.hero.leadEnd}
-              </p>
+              </motion.p>
             </div>
-            <div className="reveal-hero-delay-2 mt-8 flex w-full max-w-2xl flex-col gap-4 sm:mt-10">
-              <p className="text-xs font-semibold uppercase tracking-widest text-sage/90 sm:text-sm">
+            <div className="mt-8 flex w-full max-w-2xl flex-col gap-4 sm:mt-10">
+              <motion.p
+                className="text-xs font-semibold uppercase tracking-widest text-sage/90 sm:text-sm"
+                initial={reduce ? false : { opacity: 0, x: -12 }}
+                animate={reduce ? undefined : { opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.48, ease: easeOut }}
+              >
                 {hy.hero.downloadWhen}
-              </p>
-              <ComingSoonStores />
+              </motion.p>
+              <ComingSoonStores reduce={!!reduce} />
             </div>
-            <div
+            <motion.div
               id="waitlist"
-              className="reveal-hero-delay-3 relative z-[1] mt-12 w-full sm:mt-16"
+              className="relative z-[1] mt-12 w-full sm:mt-16"
+              initial={reduce ? false : { opacity: 0, y: 36, scale: 0.99 }}
+              animate={reduce ? undefined : { opacity: 1, y: 0, scale: 1 }}
+              transition={{
+                type: "spring",
+                stiffness: 90,
+                damping: 22,
+                delay: 0.55,
+              }}
             >
-              <div
+              <motion.div
                 className="absolute -inset-4 -z-10 rounded-[2rem] bg-gradient-to-br from-gold/8 via-transparent to-sage/10 blur-2xl"
                 aria-hidden
+                initial={reduce ? false : { opacity: 0, scale: 0.9 }}
+                animate={reduce ? undefined : { opacity: 1, scale: 1 }}
+                transition={{ duration: 1.1, delay: 0.5, ease: easeOut }}
               />
               <WaitlistForm />
-            </div>
+            </motion.div>
           </div>
         </section>
 
@@ -287,7 +376,13 @@ export function MonaiqLanding() {
           aria-labelledby="features-heading"
         >
           <div className={`mx-auto max-w-6xl ${pageGutter}`}>
-            <div className="max-w-2xl">
+            <motion.div
+              className="max-w-2xl"
+              initial={reduce ? false : { opacity: 0, y: 28 }}
+              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+              viewport={viewportReveal}
+              transition={{ duration: 0.7, ease: easeOut }}
+            >
               <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-gold/90 sm:text-sm">
                 {hy.features.kicker}
               </p>
@@ -300,12 +395,39 @@ export function MonaiqLanding() {
               <p className="mt-3 text-[0.95rem] leading-relaxed text-ink-soft/95 sm:text-base">
                 {hy.features.subtitle}
               </p>
-            </div>
-            <ul className="stagger-children mt-10 grid grid-cols-1 gap-4 min-[500px]:grid-cols-2 sm:mt-12 sm:gap-5 lg:grid-cols-3">
+            </motion.div>
+            <motion.ul
+              className="mt-10 grid grid-cols-1 gap-4 min-[500px]:grid-cols-2 sm:mt-12 sm:gap-5 lg:grid-cols-3"
+              initial="hidden"
+              whileInView="show"
+              viewport={viewportReveal}
+              variants={{
+                hidden: {},
+                show: {
+                  transition: {
+                    staggerChildren: reduce ? 0 : 0.12,
+                    delayChildren: 0.08,
+                  },
+                },
+              }}
+            >
               {featureCards.map((f) => (
-                <li
+                <motion.li
                   key={f.title}
+                  variants={{
+                    hidden: { opacity: reduce ? 1 : 0, y: reduce ? 0 : 36 },
+                    show: {
+                      opacity: 1,
+                      y: 0,
+                      transition: { duration: 0.55, ease: easeOut },
+                    },
+                  }}
                   className="group relative min-w-0 overflow-hidden rounded-2xl border border-ink/[0.09] glass-card p-5 transition duration-500 motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-gold/30 motion-safe:hover:shadow-lift sm:p-6"
+                  whileHover={
+                    reduce
+                      ? undefined
+                      : { y: -4, boxShadow: "0 20px 50px -16px rgba(32, 42, 58, 0.12)" }
+                  }
                 >
                   <div
                     className="pointer-events-none absolute -right-6 -top-6 size-32 rounded-full bg-gold/5 blur-2xl transition group-hover:bg-gold/10"
@@ -328,9 +450,9 @@ export function MonaiqLanding() {
                   <p className="mt-2 text-[0.875rem] leading-relaxed text-ink-soft/90 sm:text-[0.9375rem]">
                     {f.desc}
                   </p>
-                </li>
+                </motion.li>
               ))}
-            </ul>
+            </motion.ul>
           </div>
         </section>
 
@@ -341,7 +463,13 @@ export function MonaiqLanding() {
         >
           <div className={`mx-auto max-w-6xl ${pageGutter}`}>
             <div className="grid min-w-0 items-stretch gap-10 lg:grid-cols-2 lg:gap-14">
-              <div className="reveal-hero min-w-0 self-center">
+              <motion.div
+                className="min-w-0 self-center"
+                initial={reduce ? false : { opacity: 0, x: -28 }}
+                whileInView={reduce ? undefined : { opacity: 1, x: 0 }}
+                viewport={viewportReveal}
+                transition={{ duration: 0.7, ease: easeOut }}
+              >
                 <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-sage/90">
                   {hy.ai.kicker}
                 </p>
@@ -358,21 +486,49 @@ export function MonaiqLanding() {
                 <p className="mt-4 text-[0.95rem] leading-relaxed text-ink-soft/95 sm:text-base">
                   {hy.ai.lead}
                 </p>
-                <ul className="mt-6 space-y-2.5 text-[0.9rem] sm:space-y-3 sm:text-sm">
+                <motion.ul
+                  className="mt-6 space-y-2.5 text-[0.9rem] sm:space-y-3 sm:text-sm"
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={viewportReveal}
+                  variants={{
+                    hidden: {},
+                    show: {
+                      transition: {
+                        staggerChildren: reduce ? 0 : 0.08,
+                        delayChildren: 0.1,
+                      },
+                    },
+                  }}
+                >
                   {hy.ai.sampleQuestions.map((q) => (
-                    <li
+                    <motion.li
                       key={q}
+                      variants={{
+                        hidden: { opacity: reduce ? 1 : 0, y: reduce ? 0 : 12 },
+                        show: {
+                          opacity: 1,
+                          y: 0,
+                          transition: { duration: 0.4, ease: easeOut },
+                        },
+                      }}
                       className="flex gap-2.5 rounded-2xl border border-ink/[0.07] glass-inset bg-white/60 px-3 py-2.5 leading-snug shadow-sm backdrop-blur-sm"
                     >
                       <span className="mt-0.5 shrink-0 text-gold" aria-hidden>
                         ✓
                       </span>
                       <span className="min-w-0 text-ink/95">{q}</span>
-                    </li>
+                    </motion.li>
                   ))}
-                </ul>
-              </div>
-              <div className="reveal-hero-delay-2 relative min-w-0">
+                </motion.ul>
+              </motion.div>
+              <motion.div
+                className="relative min-w-0"
+                initial={reduce ? false : { opacity: 0, x: 32, scale: 0.98 }}
+                whileInView={reduce ? undefined : { opacity: 1, x: 0, scale: 1 }}
+                viewport={viewportReveal}
+                transition={{ duration: 0.8, delay: 0.06, ease: easeOut }}
+              >
                 <div className="absolute inset-0 -z-10 rounded-[2rem] bg-gradient-to-br from-gold/20 via-sage/15 to-gold/10 blur-3xl motion-reduce:opacity-50" />
                 <div
                   className="relative overflow-hidden rounded-2xl border border-ink/10 glass-card p-4 shadow-lift min-[400px]:rounded-3xl min-[400px]:p-5 sm:p-6"
@@ -417,7 +573,7 @@ export function MonaiqLanding() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
         </section>
@@ -428,33 +584,44 @@ export function MonaiqLanding() {
           aria-labelledby="faq-heading"
         >
           <div className={`mx-auto w-full min-w-0 max-w-2xl ${pageGutter}`}>
-            <h2
+            <motion.h2
               id="faq-heading"
               className="font-display text-[clamp(1.4rem,4vw,2.35rem)] font-extrabold tracking-display-tight"
+              initial={reduce ? false : { opacity: 0, y: 20 }}
+              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+              viewport={viewportReveal}
+              transition={{ duration: 0.6, ease: easeOut }}
             >
               {hy.faq.title}
-            </h2>
+            </motion.h2>
             <div className="mt-6 space-y-2 sm:mt-7">
-              {faqItems.map((item) => (
-                <details
+              {faqItems.map((item, i) => (
+                <motion.div
                   key={item.q}
-                  className="group min-w-0 rounded-2xl border border-ink/[0.09] glass-card transition-shadow open:border-gold/30 open:shadow-md motion-safe:open:-translate-y-px"
+                  initial={reduce ? false : { opacity: 0, y: 20 }}
+                  whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                  viewport={viewportReveal}
+                  transition={{ duration: 0.5, delay: i * 0.06, ease: easeOut }}
                 >
-                  <summary className="flex min-h-12 w-full cursor-pointer list-none items-center gap-2 rounded-2xl px-4 py-2.5 text-left text-sm font-extrabold text-ink/95 sm:px-4 sm:py-3 sm:text-sm [&::-webkit-details-marker]:hidden">
-                    <span className="min-w-0 flex-1 break-words pr-1">
-                      {item.q}
-                    </span>
-                    <span
-                      className="flex size-8 shrink-0 items-center justify-center rounded-full border border-gold/25 bg-gold/5 text-gold-bright/95 transition group-open:rotate-45"
-                      aria-hidden
-                    >
-                      +
-                    </span>
-                  </summary>
-                  <p className="border-t border-ink/6 px-4 py-3 text-sm leading-relaxed text-ink-soft/95 sm:px-4 sm:py-3.5 sm:text-sm">
-                    {item.a}
-                  </p>
-                </details>
+                  <details
+                    className="group min-w-0 rounded-2xl border border-ink/[0.09] glass-card transition-shadow open:border-gold/30 open:shadow-md motion-safe:open:-translate-y-px"
+                  >
+                    <summary className="flex min-h-12 w-full cursor-pointer list-none items-center gap-2 rounded-2xl px-4 py-2.5 text-left text-sm font-extrabold text-ink/95 sm:px-4 sm:py-3 sm:text-sm [&::-webkit-details-marker]:hidden">
+                      <span className="min-w-0 flex-1 break-words pr-1">
+                        {item.q}
+                      </span>
+                      <span
+                        className="flex size-8 shrink-0 items-center justify-center rounded-full border border-gold/25 bg-gold/5 text-gold-bright/95 transition group-open:rotate-45"
+                        aria-hidden
+                      >
+                        +
+                      </span>
+                    </summary>
+                    <p className="border-t border-ink/6 px-4 py-3 text-sm leading-relaxed text-ink-soft/95 sm:px-4 sm:py-3.5 sm:text-sm">
+                      {item.a}
+                    </p>
+                  </details>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -467,39 +634,91 @@ export function MonaiqLanding() {
           <div
             className={`mx-auto w-full min-w-0 max-w-3xl text-center ${pageGutter}`}
           >
-            <h2
+            <motion.h2
               id="cta-heading"
               className="font-display text-[clamp(1.4rem,4vw,2.35rem)] font-extrabold tracking-display-tight"
+              initial={reduce ? false : { opacity: 0, y: 24 }}
+              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+              viewport={viewportReveal}
+              transition={{ duration: 0.65, ease: easeOut }}
             >
               {hy.cta.titleBefore}
-            </h2>
+            </motion.h2>
             <div
               id="contact"
               className="mx-auto mt-10 w-full max-w-2xl text-left sm:text-center"
               aria-label={hy.a11y.contactSection}
             >
-              <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-gold/90">
+              <motion.p
+                className="text-xs font-extrabold uppercase tracking-[0.2em] text-gold/90"
+                initial={reduce ? false : { opacity: 0, y: 12 }}
+                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                viewport={viewportReveal}
+                transition={{ duration: 0.5, delay: 0.05, ease: easeOut }}
+              >
                 {hy.contact.kicker}
-              </p>
-              <h3 className="mt-2 font-display text-[clamp(1.1rem,3vw,1.65rem)] font-extrabold tracking-display-tight text-ink/95">
+              </motion.p>
+              <motion.h3
+                className="mt-2 font-display text-[clamp(1.1rem,3vw,1.65rem)] font-extrabold tracking-display-tight text-ink/95"
+                initial={reduce ? false : { opacity: 0, y: 14 }}
+                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                viewport={viewportReveal}
+                transition={{ duration: 0.55, delay: 0.1, ease: easeOut }}
+              >
                 {hy.contact.title}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-ink-soft/95 sm:text-[0.9375rem]">
+              </motion.h3>
+              <motion.p
+                className="mt-2 text-sm leading-relaxed text-ink-soft/95 sm:text-[0.9375rem]"
+                initial={reduce ? false : { opacity: 0, y: 10 }}
+                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                viewport={viewportReveal}
+                transition={{ duration: 0.5, delay: 0.15, ease: easeOut }}
+              >
                 {hy.contact.subtitle}
-              </p>
-              <ul className="stagger-children mt-8 grid grid-cols-1 gap-3 min-[480px]:grid-cols-3 sm:mt-9 sm:gap-4">
-                <li className="min-w-0">
-                  <a
+              </motion.p>
+              <motion.ul
+                className="mt-8 grid grid-cols-1 gap-3 min-[480px]:grid-cols-3 sm:mt-9 sm:gap-4"
+                initial="hidden"
+                whileInView="show"
+                viewport={viewportReveal}
+                variants={{
+                  hidden: {},
+                  show: {
+                    transition: {
+                      staggerChildren: reduce ? 0 : 0.14,
+                      delayChildren: 0.12,
+                    },
+                  },
+                }}
+              >
+                <motion.li
+                  className="min-w-0"
+                  variants={{
+                    hidden: { opacity: reduce ? 1 : 0, y: reduce ? 0 : 24 },
+                    show: {
+                      opacity: 1,
+                      y: 0,
+                      transition: { duration: 0.5, ease: easeOut },
+                    },
+                  }}
+                >
+                  <motion.a
                     href={hy.contact.instagramUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="contact-channel-card group flex min-h-[4.5rem] items-center gap-4 rounded-2xl border border-ink/[0.09] glass-card px-4 py-3 text-left transition duration-300 motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-gold/35 motion-safe:hover:shadow-lift sm:min-h-0 sm:flex-col sm:items-center sm:justify-center sm:gap-3 sm:px-3 sm:py-6 sm:text-center"
+                    className="contact-channel-card group flex min-h-[4.5rem] items-center gap-4 rounded-2xl border border-ink/[0.09] glass-card px-4 py-3 text-left sm:min-h-0 sm:flex-col sm:items-center sm:justify-center sm:gap-3 sm:px-3 sm:py-6 sm:text-center"
+                    whileHover={
+                      reduce
+                        ? undefined
+                        : { y: -3, boxShadow: "0 12px 40px -12px rgba(32, 42, 58, 0.12)" }
+                    }
+                    transition={{ type: "spring", stiffness: 400, damping: 28 }}
                   >
                     <span
                       className="contact-channel-icon flex size-12 shrink-0 items-center justify-center rounded-2xl border border-gold/25 bg-gradient-to-br from-gold/15 to-sage/10 text-gold-bright transition duration-300 motion-safe:animate-float-slow motion-safe:group-hover:scale-110 motion-reduce:animate-none sm:size-14"
                       style={{ animationDelay: "0s" }}
                     >
-                      <InstagramIcon className="size-2" />
+                      <InstagramIcon className="size-6 sm:size-7" />
                     </span>
                     <span className="min-w-0 flex-1">
                       <span className="block text-[10px] font-extrabold uppercase tracking-widest text-gold/85">
@@ -509,12 +728,28 @@ export function MonaiqLanding() {
                         {hy.contact.instagramHandle}
                       </span>
                     </span>
-                  </a>
-                </li>
-                <li className="min-w-0">
-                  <a
+                  </motion.a>
+                </motion.li>
+                <motion.li
+                  className="min-w-0"
+                  variants={{
+                    hidden: { opacity: reduce ? 1 : 0, y: reduce ? 0 : 24 },
+                    show: {
+                      opacity: 1,
+                      y: 0,
+                      transition: { duration: 0.5, ease: easeOut },
+                    },
+                  }}
+                >
+                  <motion.a
                     href={`mailto:${hy.contact.email}`}
-                    className="contact-channel-card group flex min-h-[4.5rem] items-center gap-4 rounded-2xl border border-ink/[0.09] glass-card px-4 py-3 text-left transition duration-300 motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-gold/35 motion-safe:hover:shadow-lift sm:min-h-0 sm:flex-col sm:items-center sm:justify-center sm:gap-3 sm:px-3 sm:py-6 sm:text-center"
+                    className="contact-channel-card group flex min-h-[4.5rem] items-center gap-4 rounded-2xl border border-ink/[0.09] glass-card px-4 py-3 text-left sm:min-h-0 sm:flex-col sm:items-center sm:justify-center sm:gap-3 sm:px-3 sm:py-6 sm:text-center"
+                    whileHover={
+                      reduce
+                        ? undefined
+                        : { y: -3, boxShadow: "0 12px 40px -12px rgba(32, 42, 58, 0.12)" }
+                    }
+                    transition={{ type: "spring", stiffness: 400, damping: 28 }}
                   >
                     <span
                       className="contact-channel-icon flex size-12 shrink-0 items-center justify-center rounded-2xl border border-gold/25 bg-gradient-to-br from-gold/15 to-sage/10 text-gold-bright transition duration-300 motion-safe:animate-float-slow motion-safe:group-hover:scale-110 motion-reduce:animate-none sm:size-14"
@@ -530,12 +765,28 @@ export function MonaiqLanding() {
                         {hy.contact.email}
                       </span>
                     </span>
-                  </a>
-                </li>
-                <li className="min-w-0">
-                  <a
+                  </motion.a>
+                </motion.li>
+                <motion.li
+                  className="min-w-0"
+                  variants={{
+                    hidden: { opacity: reduce ? 1 : 0, y: reduce ? 0 : 24 },
+                    show: {
+                      opacity: 1,
+                      y: 0,
+                      transition: { duration: 0.5, ease: easeOut },
+                    },
+                  }}
+                >
+                  <motion.a
                     href={`tel:${hy.contact.phoneTel.replace(/\s/g, "")}`}
-                    className="contact-channel-card group flex min-h-[4.5rem] items-center gap-4 rounded-2xl border border-ink/[0.09] glass-card px-4 py-3 text-left transition duration-300 motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-gold/35 motion-safe:hover:shadow-lift sm:min-h-0 sm:flex-col sm:items-center sm:justify-center sm:gap-3 sm:px-3 sm:py-6 sm:text-center"
+                    className="contact-channel-card group flex min-h-[4.5rem] items-center gap-4 rounded-2xl border border-ink/[0.09] glass-card px-4 py-3 text-left sm:min-h-0 sm:flex-col sm:items-center sm:justify-center sm:gap-3 sm:px-3 sm:py-6 sm:text-center"
+                    whileHover={
+                      reduce
+                        ? undefined
+                        : { y: -3, boxShadow: "0 12px 40px -12px rgba(32, 42, 58, 0.12)" }
+                    }
+                    transition={{ type: "spring", stiffness: 400, damping: 28 }}
                   >
                     <span
                       className="contact-channel-icon flex size-12 shrink-0 items-center justify-center rounded-2xl border border-gold/25 bg-gradient-to-br from-gold/15 to-sage/10 text-gold-bright transition duration-300 motion-safe:animate-float-slow motion-safe:group-hover:scale-110 motion-reduce:animate-none sm:size-14"
@@ -551,9 +802,9 @@ export function MonaiqLanding() {
                         {hy.contact.phoneDisplay}
                       </span>
                     </span>
-                  </a>
-                </li>
-              </ul>
+                  </motion.a>
+                </motion.li>
+              </motion.ul>
             </div>
             {/* <a
               href="#waitlist"
@@ -569,7 +820,13 @@ export function MonaiqLanding() {
         </section>
       </main>
 
-      <footer className="border-t border-ink/[0.09] glass-panel py-8 sm:py-10">
+      <motion.footer
+        className="border-t border-ink/[0.09] glass-panel py-8 sm:py-10"
+        initial={reduce ? false : { opacity: 0, y: 20 }}
+        whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.6, ease: easeOut }}
+      >
         <div
           className={`mx-auto flex max-w-6xl flex-col items-center gap-5 text-center min-[500px]:flex-row min-[500px]:items-start min-[500px]:justify-between min-[500px]:text-left ${pageGutter}`}
         >
@@ -591,7 +848,7 @@ export function MonaiqLanding() {
             })}
           </p>
         </div>
-      </footer>
+      </motion.footer>
     </div>
   );
 }

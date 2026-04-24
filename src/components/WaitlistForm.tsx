@@ -1,12 +1,16 @@
 "use client";
 
+import { motion, useReducedMotion } from "framer-motion";
 import { useState, type FormEvent } from "react";
 import { formatHy, hy } from "@/messages/hy";
 import { BrandLogo } from "./BrandLogo";
 
+const easeOut = [0.22, 1, 0.36, 1] as const;
+
 type Status = "idle" | "loading" | "success" | "error";
 
 export function WaitlistForm() {
+  const reduce = useReducedMotion();
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState("");
@@ -65,13 +69,18 @@ export function WaitlistForm() {
       />
       <div className="relative">
         <div className="flex flex-col items-center gap-3 sm:flex-row sm:items-start sm:gap-4">
-          <div className="sm:mt-0.5">
+          <motion.div
+            className="sm:mt-0.5"
+            initial={reduce ? false : { scale: 0.88, opacity: 0, rotate: -3 }}
+            animate={reduce ? undefined : { scale: 1, opacity: 1, rotate: 0 }}
+            transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.58 }}
+          >
             <BrandLogo
               variant="app"
               size={52}
               className="ring-2 ring-gold/30 ring-offset-2 ring-offset-paper motion-safe:transition-transform motion-safe:duration-300 sm:scale-105 sm:hover:scale-105"
             />
-          </div>
+          </motion.div>
           <h2
             className="font-display w-full min-w-0 text-center text-[clamp(1.25rem,4.2vw,1.9rem)] font-extrabold leading-tight tracking-display-tight text-ink/95 sm:max-w-none sm:text-left sm:text-2xl md:text-3xl"
             id="waitlist-title"
@@ -122,14 +131,17 @@ export function WaitlistForm() {
           </button>
         </div>
         {message ? (
-          <p
+          <motion.p
             className={`mt-3 text-sm font-medium ${
               status === "success" ? "text-emerald-800" : "text-red-600"
             }`}
             role="status"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, ease: easeOut }}
           >
             {message}
-          </p>
+          </motion.p>
         ) : null}
         <p className="mt-3 text-xs leading-relaxed text-ink-soft/70">
           {formatHy(hy.waitlist.disclaimer, { siteName: hy.site.name })}
