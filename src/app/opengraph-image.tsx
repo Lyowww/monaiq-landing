@@ -86,16 +86,6 @@ export default async function OgImage() {
             {hy.opengraph.subtitle}
           </div>
         </div>
-        <div
-          style={{
-            display: "flex",
-            color: "rgba(61, 70, 63, 0.85)",
-            fontSize: 24,
-            letterSpacing: "0.02em",
-          }}
-        >
-          {hy.opengraph.footer}
-        </div>
       </div>
     ),
     {
